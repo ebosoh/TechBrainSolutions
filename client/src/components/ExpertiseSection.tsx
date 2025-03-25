@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer } from "@/lib/animations";
-import { GrassCard } from "@/components/ui/grass-card";
+import { ServiceCard } from "@/components/ui/service-card";
 import { FaBrain, FaDatabase, FaLaptopCode, FaShoppingCart, FaBullhorn, FaCogs } from "react-icons/fa";
 
 const expertiseItems = [
@@ -76,38 +76,16 @@ export default function ExpertiseSection() {
             <motion.div
               key={index}
               variants={fadeIn("up", "tween", 0.2 + index * 0.1, 1)}
+              className="h-full"
             >
-              <GrassCard className="p-8 h-full">
-                <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-heading font-bold mb-4">{item.title}</h3>
-                <p className="opacity-80 mb-6">{item.description}</p>
-                <a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }}
-                  className="text-primary font-medium flex items-center hover:underline"
-                >
-                  Learn more
-                  <svg
-                    className="w-4 h-4 ml-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5l7 7-7 7"
-                    ></path>
-                  </svg>
-                </a>
-              </GrassCard>
+              <ServiceCard
+                title={item.title}
+                description={item.description}
+                icon={item.icon}
+                onLearnMoreClick={() => {
+                  console.log(`User clicked Learn more on ${item.title}`);
+                }}
+              />
             </motion.div>
           ))}
         </motion.div>
