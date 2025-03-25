@@ -5,6 +5,7 @@ import AboutSection from "@/components/AboutSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CallToActionSection from "@/components/CallToActionSection";
 import ContactSection from "@/components/ContactSection";
+import DataVisualizationSection from "@/components/DataVisualizationSection";
 import WavySeparator from "@/components/ui/wavy-separator";
 
 export default function Home() {
@@ -15,6 +16,8 @@ export default function Home() {
       <ExpertiseSection />
       <WavySeparator />
       <AboutSection />
+      <WavySeparator />
+      <DataVisualizationSection />
       <WavySeparator />
       <TestimonialsSection />
       <WavySeparator />
