@@ -1,0 +1,26 @@
+import MainLayout from "@/layouts/MainLayout";
+import HeroSection from "@/components/HeroSection";
+import ExpertiseSection from "@/components/ExpertiseSection";
+import AboutSection from "@/components/AboutSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import CallToActionSection from "@/components/CallToActionSection";
+import ContactSection from "@/components/ContactSection";
+import WavySeparator from "@/components/ui/wavy-separator";
+
+export default function Home() {
+  return (
+    <MainLayout>
+      <HeroSection />
+      <WavySeparator />
+      <ExpertiseSection />
+      <WavySeparator />
+      <AboutSection />
+      <WavySeparator />
+      <TestimonialsSection />
+      <WavySeparator />
+      <CallToActionSection />
+      <WavySeparator />
+      <ContactSection />
+    </MainLayout>
+  );
+}
