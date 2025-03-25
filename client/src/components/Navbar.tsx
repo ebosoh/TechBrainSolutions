@@ -42,7 +42,7 @@ export default function Navbar() {
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-2">
           <span className="text-3xl font-heading font-bold">
-            Tech<span className="text-primary">Brain</span>
+            <span className="text-primary">Tech</span>Brain
           </span>
         </Link>
 
