@@ -37,7 +37,7 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
           initial={{ opacity: 0 }}
           whileHover={{ 
             opacity: 0.07,
-            background: "linear-gradient(135deg, rgba(52,183,104,0) 0%, rgba(52,183,104,0.1) 50%, rgba(52,183,104,0) 100%)"
+            background: "linear-gradient(135deg, rgba(47,114,223,0) 0%, rgba(47,114,223,0.1) 50%, rgba(47,114,223,0) 100%)"
           }}
           transition={{ duration: 0.3 }}
         />
