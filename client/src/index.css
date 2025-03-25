@@ -21,10 +21,10 @@
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
     
-    --primary: 142 56% 40%; /* #34b768 for TechBrain green */
+    --primary: 217 62% 53%; /* #2f72df for TechBrain blue */
     --primary-foreground: 210 40% 98%;
     
-    --secondary: 217.2 73.6% 53.1%; /* #3a7bd5 for TechBrain blue */
+    --secondary: 217.2 73.6% 53.1%; /* Secondary accent color */
     --secondary-foreground: 210 40% 98%;
     
     --accent: 44.8 86.7% 51.8%; /* #f3c614 for accent yellow */
@@ -33,7 +33,7 @@
     --destructive: 0 100% 50%;
     --destructive-foreground: 210 40% 98%;
     
-    --ring: 142 56% 40%;
+    --ring: 217 62% 53%;
     
     --radius: 0.5rem;
   }
@@ -67,7 +67,7 @@
   }
   
   .section-pattern {
-    background: linear-gradient(135deg, rgba(52, 183, 104, 0.05) 0%, rgba(58, 123, 213, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(47, 114, 223, 0.05) 0%, rgba(47, 114, 223, 0.1) 100%);
   }
 }
 
@@ -84,10 +84,10 @@ html {
   padding: 1px;
   background: linear-gradient(
     to right,
-    rgba(52, 183, 104, 0) 0%,
-    rgba(52, 183, 104, 0.4) 25%,
-    rgba(58, 123, 213, 0.4) 75%, 
-    rgba(58, 123, 213, 0) 100%
+    rgba(47, 114, 223, 0) 0%,
+    rgba(47, 114, 223, 0.4) 25%,
+    rgba(47, 114, 223, 0.6) 75%, 
+    rgba(47, 114, 223, 0) 100%
   );
   -webkit-mask: 
     linear-gradient(#fff 0 0) content-box, 

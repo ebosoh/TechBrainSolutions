@@ -16,14 +16,14 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
       <motion.div
         ref={ref}
         className={cn(
-          "relative bg-white/60 backdrop-filter backdrop-blur-md border border-primary/20 shadow-[0_6px_20px_-5px_rgba(52,183,104,0.15)] rounded-xl transition-all duration-300 overflow-hidden p-8 h-full group",
+          "relative bg-white/60 backdrop-filter backdrop-blur-md border border-primary/20 shadow-[0_6px_20px_-5px_rgba(47,114,223,0.15)] rounded-xl transition-all duration-300 overflow-hidden p-8 h-full group",
           className
         )}
-        initial={{ boxShadow: "0 6px 20px -5px rgba(52,183,104,0.15)" }}
+        initial={{ boxShadow: "0 6px 20px -5px rgba(47,114,223,0.15)" }}
         whileHover={{
           y: -8,
-          boxShadow: "0 20px 30px -10px rgba(52,183,104,0.3)",
-          borderColor: "rgba(52,183,104,0.4)",
+          boxShadow: "0 20px 30px -10px rgba(47,114,223,0.3)",
+          borderColor: "rgba(47,114,223,0.4)",
         }}
         transition={{
           type: "spring",
@@ -50,7 +50,7 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
           className="relative bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6"
           whileHover={{ 
             scale: 1.1,
-            backgroundColor: "rgba(52,183,104,0.2)",
+            backgroundColor: "rgba(47,114,223,0.2)",
           }}
           transition={{
             type: "spring",
@@ -89,7 +89,7 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
         <motion.h3 
           className="text-xl font-heading font-bold mb-4 relative inline-block"
           whileHover={{ 
-            color: "rgba(52,183,104,1)",
+            color: "rgba(47,114,223,1)",
             x: 3 
           }}
           transition={{ 
