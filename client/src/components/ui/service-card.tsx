@@ -16,7 +16,7 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
       <motion.div
         ref={ref}
         className={cn(
-          "relative bg-white/60 backdrop-filter backdrop-blur-md border border-primary/20 shadow-[0_6px_20px_-5px_rgba(52,183,104,0.15)] rounded-xl transition-all duration-300 overflow-hidden p-8 h-full",
+          "relative bg-white/60 backdrop-filter backdrop-blur-md border border-primary/20 shadow-[0_6px_20px_-5px_rgba(52,183,104,0.15)] rounded-xl transition-all duration-300 overflow-hidden p-8 h-full group",
           className
         )}
         initial={{ boxShadow: "0 6px 20px -5px rgba(52,183,104,0.15)" }}
@@ -41,6 +41,9 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
           }}
           transition={{ duration: 0.3 }}
         />
+        
+        {/* Animated border */}
+        <div className="service-card-border" />
 
         {/* Icon with animation */}
         <motion.div 
@@ -56,6 +59,9 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
           }}
         >
           <motion.div
+            animate={{ 
+              y: [0, -3, 0],
+            }}
             whileHover={{ 
               y: [0, -5, 0],
               rotate: [-2, 2, -2],
@@ -64,7 +70,7 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
               y: {
                 repeat: Infinity,
                 repeatType: "mirror",
-                duration: 1.5,
+                duration: 3,
                 ease: "easeInOut"
               },
               rotate: {
@@ -81,17 +87,37 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
 
         {/* Content */}
         <motion.h3 
-          className="text-xl font-heading font-bold mb-4"
-          whileHover={{ color: "rgba(52,183,104,1)" }}
-          transition={{ duration: 0.2 }}
+          className="text-xl font-heading font-bold mb-4 relative inline-block"
+          whileHover={{ 
+            color: "rgba(52,183,104,1)",
+            x: 3 
+          }}
+          transition={{ 
+            duration: 0.2,
+            x: { type: "spring", stiffness: 300, damping: 10 }
+          }}
         >
           {title}
+          <motion.span 
+            className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary"
+            whileHover={{ 
+              width: "100%", 
+              height: "2px" 
+            }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          />
         </motion.h3>
         
         <motion.p 
           className="opacity-80 mb-6"
-          whileHover={{ opacity: 1 }}
-          transition={{ duration: 0.2 }}
+          whileHover={{ 
+            opacity: 1,
+            x: 2
+          }}
+          transition={{ 
+            duration: 0.2,
+            x: { type: "spring", stiffness: 200, damping: 15 }
+          }}
         >
           {description}
         </motion.p>
