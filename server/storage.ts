@@ -1,4 +1,6 @@
-import { users, type User, type InsertUser, type ContactFormData, type ContactForm } from "@shared/schema";
+import { users, contactForm, type User, type InsertUser, type ContactFormData, type ContactForm } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -10,6 +12,31 @@ export interface IStorage {
   saveContactForm(formData: ContactFormData): Promise<ContactForm>;
 }
 
+// PostgreSQL database storage implementation
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const results = await db.select().from(users).where(eq(users.id, id));
+    return results.length > 0 ? results[0] : undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const results = await db.select().from(users).where(eq(users.username, username));
+    return results.length > 0 ? results[0] : undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const result = await db.insert(users).values(insertUser).returning();
+    return result[0];
+  }
+
+  async saveContactForm(formData: ContactFormData): Promise<ContactForm> {
+    const result = await db.insert(contactForm).values(formData).returning();
+    console.log("Contact form saved to database:", result[0]);
+    return result[0];
+  }
+}
+
+// Fallback to in-memory storage when database is not available
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private contactForms: Map<number, ContactForm>;
@@ -56,4 +83,5 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Use the database storage since we have a PostgreSQL database set up
+export const storage = new DatabaseStorage();
