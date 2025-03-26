@@ -135,6 +135,35 @@ function generateFallbackResponse(message: string, userName?: string): string {
     aiResponse = "That's a great question! 💡 TechBrain offers comprehensive technology solutions across AI, Big Data, Web Design, E-commerce, and Digital Marketing. For more specific details on this inquiry, I'd recommend filling out our contact form so our specialists can provide you with detailed information tailored to your needs. ✨";
   }
   
+  // Personalize the response with userName if available
+  if (userName) {
+    // Add the user's name to the beginning of the response for greetings
+    if (lowerMessage.includes("hello") || lowerMessage.includes("hi")) {
+      aiResponse = `👋 Hello, ${userName}! I'm TechBrain's AI assistant. How can I help you with our technology services today?`;
+    } 
+    // For questions about services, add name at the beginning
+    else if (lowerMessage.includes("service") || lowerMessage.includes("help")) {
+      aiResponse = `${userName}, ${aiResponse}`;
+    }
+    // For other responses, randomly decide to add the name
+    else if (Math.random() > 0.5) {
+      // Sometimes add the name at the beginning
+      if (Math.random() > 0.5) {
+        aiResponse = `${userName}, ${aiResponse.charAt(0).toLowerCase() + aiResponse.slice(1)}`;
+      } 
+      // Sometimes add it in the middle or end of the sentence
+      else {
+        // If the response is longer, try to insert the name in a natural position
+        const sentences = aiResponse.split('. ');
+        if (sentences.length > 1) {
+          // Add the name to the second sentence
+          sentences[1] = `${userName}, ${sentences[1].charAt(0).toLowerCase() + sentences[1].slice(1)}`;
+          aiResponse = sentences.join('. ');
+        }
+      }
+    }
+  }
+  
   // Add a random friendly emoji at the end if not already present
   const friendlyEmojis = ["😊", "👍", "✨", "🚀", "💯", "🔥", "⭐", "🌟"];
   
