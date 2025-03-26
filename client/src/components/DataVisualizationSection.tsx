@@ -97,21 +97,26 @@ export default function DataVisualizationSection() {
     }
     
     const interval = setInterval(() => {
-      setAnimatedData(current => 
-        current.map((item, index) => ({
+      setAnimatedData(current => {
+        // Skip update if already at max values
+        const allFilled = current.every((item, index) => 
+          item.value >= techSkillsData[index].value
+        );
+        
+        if (allFilled) {
+          clearInterval(interval);
+          return current;
+        }
+        
+        return current.map((item, index) => ({
           ...item,
           value: Math.min(item.value + 5, techSkillsData[index].value)
-        }))
-      );
+        }));
+      });
     }, 50);
     
-    const allFilled = animatedData.every((item, index) => item.value >= techSkillsData[index].value);
-    if (allFilled) {
-      clearInterval(interval);
-    }
-    
     return () => clearInterval(interval);
-  }, [animatedData, shouldAnimateCounters]);
+  }, [shouldAnimateCounters]); // Remove animatedData from dependencies
   
   // Cycle through pie chart segments
   useEffect(() => {
