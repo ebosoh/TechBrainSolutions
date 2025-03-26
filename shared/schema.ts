@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -39,3 +39,34 @@ export const contactFormSchema = createInsertSchema(contactForm).pick({
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 export type ContactForm = typeof contactForm.$inferSelect;
+
+// Chat related schemas
+export const chatMessages = pgTable("chat_messages", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull(),
+  role: text("role").notNull(), // 'user' or 'assistant'
+  content: text("content").notNull(),
+  history: jsonb("history").default([]),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const chatMessageSchema = createInsertSchema(chatMessages).pick({
+  sessionId: true,
+  role: true,
+  content: true,
+  history: true,
+});
+
+export type ChatMessageData = z.infer<typeof chatMessageSchema>;
+export type ChatMessage = typeof chatMessages.$inferSelect;
+
+// Chat request schema for validation
+export const chatRequestSchema = z.object({
+  message: z.string().min(1),
+  history: z.array(
+    z.object({
+      role: z.enum(["user", "assistant"]),
+      content: z.string()
+    })
+  ).optional(),
+});

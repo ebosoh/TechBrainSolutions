@@ -1,6 +1,6 @@
-import { users, contactForm, type User, type InsertUser, type ContactFormData, type ContactForm } from "@shared/schema";
+import { users, contactForm, chatMessages, type User, type InsertUser, type ContactFormData, type ContactForm, type ChatMessageData, type ChatMessage } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -10,6 +10,10 @@ export interface IStorage {
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   saveContactForm(formData: ContactFormData): Promise<ContactForm>;
+  
+  // Chat related methods
+  saveChatMessage(chatData: ChatMessageData): Promise<ChatMessage>;
+  getChatSessionHistory(sessionId: string): Promise<ChatMessage[]>;
 }
 
 // PostgreSQL database storage implementation
@@ -34,20 +38,37 @@ export class DatabaseStorage implements IStorage {
     console.log("Contact form saved to database:", result[0]);
     return result[0];
   }
+  
+  async saveChatMessage(chatData: ChatMessageData): Promise<ChatMessage> {
+    const result = await db.insert(chatMessages).values(chatData).returning();
+    return result[0];
+  }
+  
+  async getChatSessionHistory(sessionId: string): Promise<ChatMessage[]> {
+    return await db
+      .select()
+      .from(chatMessages)
+      .where(eq(chatMessages.sessionId, sessionId))
+      .orderBy(chatMessages.createdAt);
+  }
 }
 
 // Fallback to in-memory storage when database is not available
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private contactForms: Map<number, ContactForm>;
+  private chatMessages: Map<number, ChatMessage>;
   userCurrentId: number;
   contactFormCurrentId: number;
+  chatMessageCurrentId: number;
 
   constructor() {
     this.users = new Map();
     this.contactForms = new Map();
+    this.chatMessages = new Map();
     this.userCurrentId = 1;
     this.contactFormCurrentId = 1;
+    this.chatMessageCurrentId = 1;
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -80,6 +101,26 @@ export class MemStorage implements IStorage {
     this.contactForms.set(id, contactForm);
     console.log("Contact form saved:", contactForm);
     return contactForm;
+  }
+  
+  async saveChatMessage(chatData: ChatMessageData): Promise<ChatMessage> {
+    const id = this.chatMessageCurrentId++;
+    const createdAt = new Date();
+    
+    const chatMessage: ChatMessage = {
+      ...chatData,
+      id,
+      createdAt
+    };
+    
+    this.chatMessages.set(id, chatMessage);
+    return chatMessage;
+  }
+  
+  async getChatSessionHistory(sessionId: string): Promise<ChatMessage[]> {
+    return Array.from(this.chatMessages.values())
+      .filter(msg => msg.sessionId === sessionId)
+      .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
   }
 }
 
