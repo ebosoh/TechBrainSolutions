@@ -8,7 +8,7 @@ const navLinks = [
   { name: "Expertise", href: "#expertise" },
   { name: "About Us", href: "#about" },
   { name: "Metrics", href: "#data-visualization" },
-  { name: "Contact", href: "#contact" },
+  { name: "Get in Touch", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -77,7 +77,7 @@ export default function Navbar() {
             }}
             className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1"
           >
-            Contact Us
+            Get in Touch
           </a>
         </div>
 
@@ -147,7 +147,7 @@ export default function Navbar() {
                 }}
                 className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl text-center transition-all duration-300 shadow-md"
               >
-                Contact Us
+                Get in Touch
               </a>
             </div>
           </motion.div>

@@ -126,7 +126,7 @@ const DetailModal = ({
               }
             }}
           >
-            Contact Us
+            Get in Touch
           </button>
         </div>
       </div>
