@@ -64,17 +64,36 @@ export default function CareerDetail() {
     }
   }, [careerId, form]);
   
+  // Create mutation for job application submission
+  const { mutate: submitApplication, isPending } = useMutation({
+    mutationFn: (data: ApplicationValues) => {
+      return apiRequest('/api/job-applications', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+    },
+    onSuccess: () => {
+      setApplicationSubmitted(true);
+      toast({
+        title: "Application Submitted",
+        description: "Thank you for your application! We'll be in touch soon.",
+      });
+      // Invalidate queries to refresh the data
+      queryClient.invalidateQueries({ queryKey: ['/api/job-applications'] });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your application. Please try again.",
+        variant: "destructive",
+      });
+      console.error('Application submission error:', error);
+    }
+  });
+
   // Handle form submission
   const onSubmit = (values: ApplicationValues) => {
-    console.log("Application submitted:", values);
-    
-    // In a real application, this would send data to the server
-    // For now, we'll just show a success message
-    setApplicationSubmitted(true);
-    toast({
-      title: "Application Submitted",
-      description: "Thank you for your application! We'll be in touch soon.",
-    });
+    submitApplication(values);
   };
   
   // Fetch similar positions
@@ -355,8 +374,21 @@ export default function CareerDetail() {
                         )}
                       />
                       
-                      <Button type="submit" size="lg" className="w-full md:w-auto gap-2">
-                        <Send className="h-4 w-4" /> Submit Application
+                      <Button 
+                        type="submit" 
+                        size="lg" 
+                        className="w-full md:w-auto gap-2"
+                        disabled={isPending}
+                      >
+                        {isPending ? (
+                          <>
+                            <span className="animate-spin mr-2">⌛</span> Submitting...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="h-4 w-4" /> Submit Application
+                          </>
+                        )}
                       </Button>
                     </form>
                   </Form>
