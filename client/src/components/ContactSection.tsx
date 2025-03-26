@@ -40,11 +40,14 @@ export default function ContactSection() {
   });
   
   // Check if the URL contains a CV hash parameter
-  React.useEffect(() => {
+  useEffect(() => {
     // Check if the URL has a #cv hash to indicate the user wants to send their CV
     if (window.location.hash === '#cv') {
       // Pre-fill the subject field for CV submissions
       form.setValue('subject', 'CV Submission for Future Opportunities');
+      
+      // Add CV submission placeholder text for the message
+      form.setValue('message', 'I am submitting my CV for consideration for future opportunities at TechBrain. Please find my resume/CV at the following link: [PASTE YOUR CV LINK HERE]\n\nHere is a brief summary of my relevant skills and experience:\n\n');
       
       // Scroll to the contact form
       setTimeout(() => {
@@ -126,11 +129,13 @@ export default function ContactSection() {
             className="lg:w-1/2 lg:pr-16 mb-10 lg:mb-0"
           >
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">
-              Get in Touch
+              {window.location.hash === '#cv' ? 'Submit Your CV' : 'Get in Touch'}
             </h2>
             <p className="text-lg opacity-80 mb-8 leading-relaxed">
-              Ready to discuss how TechBrain can help your business grow? Fill out
-              the form and our team will get back to you within 24 hours.
+              {window.location.hash === '#cv' 
+                ? "We're always looking for talented individuals to join our team. Fill out the form below and submit your CV for future opportunities."
+                : "Ready to discuss how TechBrain can help your business grow? Fill out the form and our team will get back to you within 24 hours."
+              }
             </p>
 
             <div className="space-y-6">
@@ -248,9 +253,11 @@ export default function ContactSection() {
                         <FormLabel>Message</FormLabel>
                         <FormControl>
                           <Textarea 
-                            placeholder="Tell us about your project" 
+                            placeholder={window.location.hash === '#cv' 
+                              ? "Share your skills, experience, and why you'd like to join our team"
+                              : "Tell us about your project"}
                             className="w-full px-4 py-3 rounded-lg border border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition duration-300" 
-                            rows={5}
+                            rows={8}
                             {...field} 
                           />
                         </FormControl>
@@ -264,7 +271,12 @@ export default function ContactSection() {
                     className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 nav-btn-pulse"
                     disabled={contactMutation.isPending}
                   >
-                    {contactMutation.isPending ? "Sending..." : "Send Message"}
+                    {contactMutation.isPending 
+                      ? "Sending..." 
+                      : window.location.hash === '#cv'
+                        ? "Submit Your CV"
+                        : "Send Message"
+                    }
                   </Button>
                 </form>
               </Form>
