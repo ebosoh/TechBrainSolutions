@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode, useState } from "react";
+import { forwardRef, ReactNode, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
@@ -15,12 +15,121 @@ export interface ServiceCardProps {
   onLearnMoreClick?: () => void;
 }
 
+// Create a separate Modal component
+const DetailModal = ({ 
+  isOpen, 
+  onClose, 
+  title, 
+  description, 
+  icon, 
+  detailedInfo 
+}: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  title: string; 
+  description: string; 
+  icon: ReactNode; 
+  detailedInfo: { 
+    trendingServices: string[]; 
+    trendingProducts: string[]; 
+  }; 
+}) => {
+  // Effect to prevent scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+  
+  if (!isOpen) return null;
+  
+  return (
+    <div 
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold font-heading flex items-center">
+            <span className="mr-3">{icon}</span>
+            {title}
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-800 transition-colors"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        <p className="text-gray-700 mb-6">{description}</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Trending Services */}
+          <div>
+            <h3 className="text-lg font-bold text-primary mb-4 border-b border-primary/20 pb-2">
+              Trending Services
+            </h3>
+            <ul className="space-y-3">
+              {detailedInfo.trendingServices.map((service, index) => (
+                <li
+                  key={index}
+                  className="flex items-start"
+                >
+                  <span className="text-primary mr-2 mt-1">•</span>
+                  <span>{service}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Trending Products */}
+          <div>
+            <h3 className="text-lg font-bold text-primary mb-4 border-b border-primary/20 pb-2">
+              Trending Products
+            </h3>
+            <ul className="space-y-3">
+              {detailedInfo.trendingProducts.map((product, index) => (
+                <li
+                  key={index}
+                  className="flex items-start"
+                >
+                  <span className="text-primary mr-2 mt-1">•</span>
+                  <span>{product}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-8 flex justify-end">
+          <button
+            className="bg-primary text-white px-6 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+            onClick={() => {
+              onClose();
+              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
+            Contact Us
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
   ({ className, title, description, icon, detailedInfo, onLearnMoreClick }, ref) => {
     const [showDetailedInfo, setShowDetailedInfo] = useState(false);
-    
-    // Debug logging for state changes
-    console.log(`ServiceCard: ${title}, showDetailedInfo: ${showDetailedInfo}`);
     
     return (
       <>
@@ -135,13 +244,10 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
           
           {/* Learn more button with enhanced hover effect */}
           <motion.button
-            onClick={(e) => {
-              console.log(`Button clicked for ${title}, detailedInfo:`, detailedInfo ? 'exists' : 'undefined');
+            onClick={() => {
               if (detailedInfo) {
-                console.log(`Setting showDetailedInfo to true for ${title}`);
                 setShowDetailedInfo(true);
               } else if (onLearnMoreClick) {
-                console.log(`Calling onLearnMoreClick for ${title}`);
                 onLearnMoreClick();
               }
             }}
@@ -169,102 +275,17 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
           </motion.button>
         </motion.div>
 
-        {/* Detailed Info Modal */}
-        <AnimatePresence>
-          {showDetailedInfo && detailedInfo && (
-            <motion.div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => {
-                console.log(`Modal backdrop clicked, closing for ${title}`);
-                setShowDetailedInfo(false);
-              }}
-            >
-              <motion.div
-                className="bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold font-heading flex items-center">
-                    <span className="mr-3">{icon}</span>
-                    {title}
-                  </h2>
-                  <button
-                    onClick={() => setShowDetailedInfo(false)}
-                    className="text-gray-500 hover:text-gray-800 transition-colors"
-                  >
-                    <X size={24} />
-                  </button>
-                </div>
-
-                <p className="text-gray-700 mb-6">{description}</p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Trending Services */}
-                  <div>
-                    <h3 className="text-lg font-bold text-primary mb-4 border-b border-primary/20 pb-2">
-                      Trending Services
-                    </h3>
-                    <ul className="space-y-3">
-                      {detailedInfo.trendingServices.map((service, index) => (
-                        <motion.li
-                          key={index}
-                          className="flex items-start"
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                          <span className="text-primary mr-2 mt-1">•</span>
-                          <span>{service}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Trending Products */}
-                  <div>
-                    <h3 className="text-lg font-bold text-primary mb-4 border-b border-primary/20 pb-2">
-                      Trending Products
-                    </h3>
-                    <ul className="space-y-3">
-                      {detailedInfo.trendingProducts.map((product, index) => (
-                        <motion.li
-                          key={index}
-                          className="flex items-start"
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                          <span className="text-primary mr-2 mt-1">•</span>
-                          <span>{product}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-8 flex justify-end">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-primary text-white px-6 py-2 rounded-lg font-medium"
-                    onClick={() => {
-                      setShowDetailedInfo(false);
-                      document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }}
-                  >
-                    Contact Us
-                  </motion.button>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Simplified modal implementation */}
+        {detailedInfo && (
+          <DetailModal
+            isOpen={showDetailedInfo}
+            onClose={() => setShowDetailedInfo(false)}
+            title={title}
+            description={description}
+            icon={icon}
+            detailedInfo={detailedInfo}
+          />
+        )}
       </>
     );
   }
