@@ -63,6 +63,7 @@ export type ChatMessage = typeof chatMessages.$inferSelect;
 // Chat request schema for validation
 export const chatRequestSchema = z.object({
   message: z.string().min(1),
+  userName: z.string().optional(),
   history: z.array(
     z.object({
       role: z.enum(["user", "assistant"]),

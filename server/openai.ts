@@ -11,15 +11,20 @@ interface ChatMessage {
 
 export async function generateChatResponse(
   message: string,
-  history: ChatMessage[] = []
+  history: ChatMessage[] = [],
+  userName?: string
 ): Promise<string> {
   try {
-    // Define system message for the assistant
+    // Define system message for the assistant, including userName if available
+    const userNameInstruction = userName ? `You are speaking with ${userName}. Address them by name occasionally to personalize the conversation.` : '';
+    
     const systemMessage: ChatMessage = {
       role: "system",
       content: `You are TechBrain's AI assistant. TechBrain is a technology company that specializes in AI, Big Data, Machine Learning, Web Design, E-commerce Platforms, and Digital Marketing. 
       
 Your responses should be helpful, concise, and professional. If asked about services, provide specific information about TechBrain's offerings. If you don't know something specific about TechBrain beyond what's mentioned here, acknowledge that and offer to connect the user with a human representative for more details.
+
+${userNameInstruction}
 
 Keep responses under 150 words unless a detailed explanation is necessary.
 
@@ -46,7 +51,7 @@ Add appropriate emojis to your responses to make them more engaging. For instanc
     // Check if we have an API key
     if (!process.env.DEEPSEEK_API_KEY) {
       log("Missing Deepseek API key, falling back to rule-based responses", "chat-api");
-      return generateFallbackResponse(message);
+      return generateFallbackResponse(message, userName);
     }
     
     // Make API request to Deepseek
@@ -78,12 +83,12 @@ Add appropriate emojis to your responses to make them more engaging. For instanc
     
     // Fall back to rule-based response if API fails
     log("Falling back to rule-based responses", "chat-api");
-    return generateFallbackResponse(message);
+    return generateFallbackResponse(message, userName);
   }
 }
 
 // Fallback function using rule-based responses
-function generateFallbackResponse(message: string): string {
+function generateFallbackResponse(message: string, userName?: string): string {
   // Create a simple rule-based response generator
   // This is used as a fallback when the API key is missing or API call fails
   const keywords = {

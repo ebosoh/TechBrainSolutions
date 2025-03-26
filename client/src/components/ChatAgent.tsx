@@ -27,17 +27,22 @@ export default function ChatAgent() {
     scrollToBottom();
   }, [messages]);
 
+  // User name storage
+  const [userName, setUserName] = useState<string>("");
+  const [askedForName, setAskedForName] = useState<boolean>(false);
+
   // Initial greeting when chat is opened
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       setMessages([
         {
           id: "welcome",
-          content: "Hi there! I'm TechBrain's assistant. How can I help you today?",
+          content: "Hi there! I'm TechBrain's assistant. What's your name?",
           role: "assistant",
           timestamp: new Date(),
         },
       ]);
+      setAskedForName(true);
     }
   }, [isOpen, messages.length]);
 
@@ -56,6 +61,35 @@ export default function ChatAgent() {
     setMessage("");
     setIsLoading(true);
 
+    // Handle name capture if it's the first user message after being asked
+    if (askedForName && !userName) {
+      // Extract name from first message
+      const name = message.trim().replace(/^(i'?m|i am|my name is|this is|hello|hi|hey)?\s*/i, '');
+      
+      // Use first "word" as name, with appropriate capitalization
+      const extractedName = name.split(/\s+/)[0].trim();
+      const formattedName = extractedName.charAt(0).toUpperCase() + extractedName.slice(1).toLowerCase();
+      
+      setUserName(formattedName);
+      setAskedForName(false);
+      
+      // Send welcome message with name
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now().toString(),
+            content: `👋 Nice to meet you, ${formattedName}! I'm TechBrain's AI assistant. How can I help you with our technology services today? ✨`,
+            role: "assistant",
+            timestamp: new Date(),
+          },
+        ]);
+        setIsLoading(false);
+      }, 500);
+      
+      return;
+    }
+
     try {
       const response = await apiRequest<{success: boolean; response: string; sessionId: string}>(
         "/api/chat",
@@ -63,6 +97,7 @@ export default function ChatAgent() {
           method: "POST",
           body: JSON.stringify({
             message: message.trim(),
+            userName: userName,
             history: messages.map(m => ({ role: m.role, content: m.content })),
           })
         }

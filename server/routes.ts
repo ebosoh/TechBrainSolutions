@@ -42,7 +42,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/chat", async (req, res) => {
     try {
       // Validate the request body
-      const { message, history = [] } = chatRequestSchema.parse(req.body);
+      const { message, userName, history = [] } = chatRequestSchema.parse(req.body);
       
       // Generate a session ID if not present in the request
       // In a real-world app, this would be tied to a user session
@@ -56,8 +56,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         history: history
       });
       
-      // Generate a response using OpenAI
-      const response = await generateChatResponse(message, history);
+      // Generate a response using Deepseek, passing the userName if available
+      const response = await generateChatResponse(message, history, userName);
       
       // Save the assistant response to the database
       await storage.saveChatMessage({
