@@ -14,26 +14,27 @@ export default function Footer() {
     { name: "Home", href: "#home" },
     { name: "About Us", href: "#about" },
     { name: "Services", href: "#expertise" },
-    { name: "Contact", href: "#contact" },
+    { name: "Terms of Use", href: "/terms", isPage: true },
+    { name: "Company Policy", href: "/policy", isPage: true },
   ];
 
   const contactInfo = [
     {
       icon: <FaMapMarkerAlt className="mt-1 mr-3 text-primary" />,
-      content: "123 Tech Avenue, Innovation District, CA 94043",
+      content: "University Way, Nairobi, Kenya",
     },
     {
       icon: <FaEnvelope className="mt-1 mr-3 text-primary" />,
-      content: "info@techbrain.com",
+      content: "info@techbrain.co.ke",
     },
     {
       icon: <FaPhone className="mt-1 mr-3 text-primary" />,
-      content: "+1 (555) 123-4567",
+      content: "+254 (78) 0010010",
     },
   ];
 
   const socialLinks = [
-    { icon: <FaLinkedinIn />, href: "#" },
+    { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/techbrainco/?viewAsMember=true" },
     { icon: <FaTwitter />, href: "#" },
     { icon: <FaFacebookF />, href: "#" },
     { icon: <FaInstagram />, href: "#" },
@@ -66,6 +67,8 @@ export default function Footer() {
                 <a
                   key={index}
                   href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-300 hover:text-primary transition duration-300"
                 >
                   {link.icon}
@@ -99,16 +102,25 @@ export default function Footer() {
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(link.href);
-                    }}
-                    className="text-gray-300 hover:text-primary transition duration-300"
-                  >
-                    {link.name}
-                  </a>
+                  {link.isPage ? (
+                    <Link
+                      href={link.href}
+                      className="text-gray-300 hover:text-primary transition duration-300"
+                    >
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection(link.href);
+                      }}
+                      className="text-gray-300 hover:text-primary transition duration-300"
+                    >
+                      {link.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

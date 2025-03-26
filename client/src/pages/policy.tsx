@@ -10,7 +10,7 @@ export default function PolicyPage() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
-        variants={fadeIn("up", 0.2)}
+        variants={fadeIn("up", "tween", 0, 1)}
       >
         <h1 className="text-4xl font-bold mb-8 text-primary">Company Policy</h1>
         

@@ -1,12 +1,48 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { fadeIn, slideIn, staggerContainer } from "@/lib/animations";
+import { useEffect, useRef, useState } from "react";
 
 export default function AboutSection() {
+  const [hasCounted, setHasCounted] = useState(false);
+  const statsRef = useRef(null);
+  const isInView = useInView(statsRef, { once: false, amount: 0.5 });
+  
   const stats = [
-    { value: "50+", label: "Expert Developers" },
-    { value: "100+", label: "Projects Completed" },
-    { value: "98%", label: "Client Satisfaction" },
+    { endValue: 10, suffix: "+", label: "Expert Developers" },
+    { endValue: 100, suffix: "+", label: "Projects Completed" },
+    { endValue: 98, suffix: "%", label: "Client Satisfaction" },
   ];
+  
+  const [counts, setCounts] = useState(stats.map(() => 0));
+  
+  useEffect(() => {
+    if (isInView && !hasCounted) {
+      setHasCounted(true);
+      stats.forEach((stat, index) => {
+        const duration = 2000; // ms
+        const increment = stat.endValue / (duration / 16); // Assuming 60 fps
+        let currentCount = 0;
+        
+        const timer = setInterval(() => {
+          currentCount += increment;
+          if (currentCount >= stat.endValue) {
+            currentCount = stat.endValue;
+            clearInterval(timer);
+          }
+          setCounts(prev => {
+            const newCounts = [...prev];
+            newCounts[index] = Math.floor(currentCount);
+            return newCounts;
+          });
+        }, 16);
+        
+        return () => clearInterval(timer);
+      });
+    } else if (!isInView && hasCounted) {
+      setHasCounted(false);
+      setCounts(stats.map(() => 0));
+    }
+  }, [isInView, hasCounted]);
 
   return (
     <section
@@ -52,14 +88,16 @@ export default function AboutSection() {
               a competitive edge in today's fast-evolving digital landscape.
             </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+            <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
                   variants={fadeIn("up", "tween", 0.3 + index * 0.1, 1)}
                   className="text-center"
                 >
-                  <div className="text-4xl text-primary font-bold">{stat.value}</div>
+                  <div className="text-4xl text-primary font-bold">
+                    {counts[index]}{stat.suffix}
+                  </div>
                   <p className="text-sm mt-2">{stat.label}</p>
                 </motion.div>
               ))}
