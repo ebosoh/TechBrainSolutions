@@ -6,11 +6,11 @@ import { apiRequest } from "@/lib/queryClient";
 import { User } from "@shared/schema";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "Expertise", href: "#expertise" },
-  { name: "About Us", href: "#about" },
-  { name: "Metrics", href: "#data-visualization" },
-  { name: "Careers", href: "/careers" },
+  { name: "Home", href: "#home", isAnchor: true },
+  { name: "Expertise", href: "#expertise", isAnchor: true },
+  { name: "About Us", href: "#about", isAnchor: true },
+  { name: "Metrics", href: "#data-visualization", isAnchor: true },
+  { name: "Careers", href: "/careers", isAnchor: false },
 ];
 
 export default function Navbar() {
@@ -45,16 +45,28 @@ export default function Navbar() {
     checkSession();
   }, []);
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (href: string, isAnchor: boolean = false) => {
     setIsOpen(false);
     
-    if (href.startsWith('#')) {
+    if (isAnchor || href.startsWith('#')) {
       const element = document.querySelector(href);
       if (element) {
         window.scrollTo({
           top: element.getBoundingClientRect().top + window.scrollY - 80,
           behavior: "smooth",
         });
+      } else if (href === '#home' && window.location.pathname !== '/') {
+        // If we're not on the homepage and trying to go to #home, navigate to home first
+        navigate('/');
+        setTimeout(() => {
+          const homeElement = document.querySelector('#home');
+          if (homeElement) {
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          }
+        }, 100);
       }
     } else {
       // For regular links like "/careers", use wouter navigation
@@ -79,7 +91,7 @@ export default function Navbar() {
               href={link.href}
               onClick={(e) => {
                 e.preventDefault();
-                handleNavClick(link.href);
+                handleNavClick(link.href, link.isAnchor);
               }}
               className="font-medium text-neutral hover:text-primary transition duration-300 ease-in-out relative group nav-link-hover"
             >
@@ -103,15 +115,7 @@ export default function Navbar() {
             href="#contact"
             onClick={(e) => {
               e.preventDefault();
-              const contactSection = document.querySelector('#contact');
-              if (contactSection) {
-                const topOffset = contactSection.getBoundingClientRect().top + window.scrollY - 80;
-                window.scrollTo({
-                  top: topOffset,
-                  behavior: 'smooth'
-                });
-                setIsOpen(false);
-              }
+              handleNavClick('#contact', true);
             }}
             className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 nav-btn-pulse"
           >
@@ -162,7 +166,7 @@ export default function Navbar() {
                   href={link.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    handleNavClick(link.href);
+                    handleNavClick(link.href, link.isAnchor);
                   }}
                   className="font-medium text-neutral hover:text-primary py-2 transition duration-300 ease-in-out relative group nav-link-hover"
                 >
@@ -186,15 +190,7 @@ export default function Navbar() {
                 href="#contact"
                 onClick={(e) => {
                   e.preventDefault();
-                  const contactSection = document.querySelector('#contact');
-                  if (contactSection) {
-                    const topOffset = contactSection.getBoundingClientRect().top + window.scrollY - 80;
-                    window.scrollTo({
-                      top: topOffset,
-                      behavior: 'smooth'
-                    });
-                    setIsOpen(false);
-                  }
+                  handleNavClick('#contact', true);
                 }}
                 className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl text-center transition-all duration-300 shadow-md nav-btn-pulse"
               >

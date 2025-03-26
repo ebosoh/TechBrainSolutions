@@ -47,6 +47,9 @@ export default function Footer() {
         top: element.getBoundingClientRect().top + window.scrollY - 80,
         behavior: "smooth",
       });
+    } else if (id === '#home' && window.location.pathname !== '/') {
+      // If we're not on the homepage and trying to go to #home, navigate to home first
+      window.location.href = '/';
     }
   };
 
