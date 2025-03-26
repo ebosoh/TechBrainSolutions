@@ -181,6 +181,7 @@ export default function ExpertiseSection() {
                 detailedInfo={item.detailedInfo}
                 onLearnMoreClick={() => {
                   console.log(`User clicked Learn more on ${item.title}`);
+                  alert(`Learn more clicked for ${item.title}`);
                 }}
               />
             </motion.div>

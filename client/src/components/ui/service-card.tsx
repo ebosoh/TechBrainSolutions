@@ -18,7 +18,10 @@ export interface ServiceCardProps {
 export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
   ({ className, title, description, icon, detailedInfo, onLearnMoreClick }, ref) => {
     const [showDetailedInfo, setShowDetailedInfo] = useState(false);
-
+    
+    // Debug logging for state changes
+    console.log(`ServiceCard: ${title}, showDetailedInfo: ${showDetailedInfo}`);
+    
     return (
       <>
         <motion.div
@@ -132,14 +135,17 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
           
           {/* Learn more button with enhanced hover effect */}
           <motion.button
-            onClick={() => {
+            onClick={(e) => {
+              console.log(`Button clicked for ${title}, detailedInfo:`, detailedInfo ? 'exists' : 'undefined');
               if (detailedInfo) {
+                console.log(`Setting showDetailedInfo to true for ${title}`);
                 setShowDetailedInfo(true);
               } else if (onLearnMoreClick) {
+                console.log(`Calling onLearnMoreClick for ${title}`);
                 onLearnMoreClick();
               }
             }}
-            className="text-primary font-medium flex items-center group cursor-pointer"
+            className="text-primary font-medium flex items-center group cursor-pointer relative z-10"
             whileHover={{ x: 3 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
@@ -167,11 +173,14 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
         <AnimatePresence>
           {showDetailedInfo && detailedInfo && (
             <motion.div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setShowDetailedInfo(false)}
+              onClick={() => {
+                console.log(`Modal backdrop clicked, closing for ${title}`);
+                setShowDetailedInfo(false);
+              }}
             >
               <motion.div
                 className="bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
