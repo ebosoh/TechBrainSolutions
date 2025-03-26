@@ -56,6 +56,10 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export default function DataVisualizationSection() {
+  // Ref for intersection observer for metric counters
+  const metricsSectionRef = React.useRef(null);
+  const [shouldAnimateCounters, setShouldAnimateCounters] = useState(false);
+  
   const [animatedData, setAnimatedData] = useState(techSkillsData.map(item => ({ ...item, value: 0 })));
   const [activeIndex, setActiveIndex] = useState(0);
   const [showChart, setShowChart] = useState(0);
@@ -64,8 +68,34 @@ export default function DataVisualizationSection() {
   const [teamGrowthCount, setTeamGrowthCount] = useState(0);
   const [techStackCount, setTechStackCount] = useState(0);
   
+  // IntersectionObserver for counters - detects when metrics section comes into view
+  useEffect(() => {
+    if (!metricsSectionRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        setShouldAnimateCounters(entry.isIntersecting);
+      },
+      { threshold: 0.25 }
+    );
+    
+    observer.observe(metricsSectionRef.current);
+    return () => {
+      if (metricsSectionRef.current) {
+        observer.unobserve(metricsSectionRef.current);
+      }
+    };
+  }, []);
+  
   // Animation for bar chart data
   useEffect(() => {
+    // Reset chart data when section is not visible
+    if (!shouldAnimateCounters) {
+      setAnimatedData(techSkillsData.map(item => ({ ...item, value: 0 })));
+      return;
+    }
+    
     const interval = setInterval(() => {
       setAnimatedData(current => 
         current.map((item, index) => ({
@@ -81,7 +111,7 @@ export default function DataVisualizationSection() {
     }
     
     return () => clearInterval(interval);
-  }, [animatedData]);
+  }, [animatedData, shouldAnimateCounters]);
   
   // Cycle through pie chart segments
   useEffect(() => {
@@ -103,6 +133,15 @@ export default function DataVisualizationSection() {
   
   // Counter animation for stats using framer-motion animate functionality
   useEffect(() => {
+    // Reset counters when not in view
+    if (!shouldAnimateCounters) {
+      setProjectsCount(0);
+      setRetentionCount(0);
+      setTeamGrowthCount(0);
+      setTechStackCount(0);
+      return;
+    }
+    
     // Using a setTimeout to allow the component to render first
     const animationTimeout = setTimeout(() => {
       // Start all the counting animations
@@ -141,7 +180,7 @@ export default function DataVisualizationSection() {
     }, 500);
     
     return () => clearTimeout(animationTimeout);
-  }, []);
+  }, [shouldAnimateCounters]);
   
   const chartAnimationVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -164,14 +203,14 @@ export default function DataVisualizationSection() {
   };
   
   return (
-    <section id="data-visualization" className="py-20 bg-background">
+    <section id="data-visualization" className="py-20 bg-background" ref={metricsSectionRef}>
       <div className="container mx-auto px-4">
         <motion.div 
           className="text-center mb-16"
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.25 }}
         >
           <motion.h2 
             variants={fadeIn('up', 'tween', 0.1, 1)}
@@ -194,7 +233,7 @@ export default function DataVisualizationSection() {
             variants={fadeIn('right', 'tween', 0.2, 1)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: false, amount: 0.25 }}
             className="flex flex-col"
           >
             <GrassCard className="p-8 h-full flex flex-col">
@@ -386,7 +425,7 @@ export default function DataVisualizationSection() {
               variants={fadeIn('up', 'tween', 0.3, 1)}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
+              viewport={{ once: false, amount: 0.25 }}
             >
               <GrassCard className="p-6 h-full">
                 <div className="flex flex-col items-center text-center">
@@ -424,7 +463,7 @@ export default function DataVisualizationSection() {
               variants={fadeIn('up', 'tween', 0.4, 1)}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
+              viewport={{ once: false, amount: 0.25 }}
             >
               <GrassCard className="p-6 h-full">
                 <div className="flex flex-col items-center text-center">
@@ -466,7 +505,7 @@ export default function DataVisualizationSection() {
               variants={fadeIn('up', 'tween', 0.5, 1)}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
+              viewport={{ once: false, amount: 0.25 }}
             >
               <GrassCard className="p-6 h-full">
                 <div className="flex flex-col items-center text-center">
@@ -506,7 +545,7 @@ export default function DataVisualizationSection() {
               variants={fadeIn('up', 'tween', 0.6, 1)}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
+              viewport={{ once: false, amount: 0.25 }}
             >
               <GrassCard className="p-6 h-full">
                 <div className="flex flex-col items-center text-center">
@@ -518,10 +557,10 @@ export default function DataVisualizationSection() {
                       <path d="M20 18h2"></path>
                       <path d="m19.07 10.93-1.41 1.41"></path>
                       <path d="M22 22H2"></path>
-                      <path d="m8 22 4-10 4 10"></path>
+                      <path d="M16 16a4 4 0 0 1-8 0"></path>
                     </svg>
                   </div>
-                  <h4 className="text-xl font-bold mb-1 font-heading">Tech Stack</h4>
+                  <h4 className="text-xl font-bold mb-1 font-heading">Tech Stack Growth</h4>
                   <div className="relative w-full h-12 flex items-center justify-center">
                     <motion.span 
                       className="text-4xl font-bold text-primary"
@@ -534,11 +573,11 @@ export default function DataVisualizationSection() {
                         delay: 0.5
                       }}
                     >
-                      {techStackCount}+
+                      {techStackCount}
                     </motion.span>
                   </div>
                   <p className="text-muted-foreground text-sm mt-2">
-                    Advanced technologies in our development stack
+                    New technologies integrated in the last year
                   </p>
                 </div>
               </GrassCard>
