@@ -459,6 +459,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         phone: validatedData.phone || "",
         resumeLink: validatedData.resumeLink,
         coverLetter: validatedData.experience,
+        careerId: null, // Explicitly set to null for general CV submissions
         status: "pending",
         additionalInfo: JSON.stringify({
           linkedIn: validatedData.linkedIn,
