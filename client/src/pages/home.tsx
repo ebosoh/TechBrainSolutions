@@ -5,6 +5,7 @@ import AboutSection from "@/components/AboutSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CallToActionSection from "@/components/CallToActionSection";
 import DataVisualizationSection from "@/components/DataVisualizationSection";
+import ContactSection from "@/components/ContactSection";
 import ChatAgent from "@/components/ChatAgent";
 import WavySeparator from "@/components/ui/wavy-separator";
 
@@ -22,6 +23,8 @@ export default function Home() {
       <TestimonialsSection />
       <WavySeparator />
       <CallToActionSection />
+      <WavySeparator />
+      <ContactSection />
       <ChatAgent />
     </MainLayout>
   );
