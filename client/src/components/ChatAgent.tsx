@@ -141,13 +141,13 @@ export default function ChatAgent() {
             <svg width="50" height="50" viewBox="0 0 100 100" className="cartoon-robot">
               <circle cx="50" cy="50" r="40" fill="#2f72df" />
               <circle cx="35" cy="40" r="8" fill="white" />
-              <circle cx="35" cy="40" r="4" fill="#333" />
+              <circle cx="35" cy="40" r="4" fill="#333" className="robot-eye" />
               <circle cx="65" cy="40" r="8" fill="white" />
-              <circle cx="65" cy="40" r="4" fill="#333" />
+              <circle cx="65" cy="40" r="4" fill="#333" className="robot-eye" />
               <rect x="40" y="65" width="20" height="5" rx="2" fill="white" />
               <path d="M30,80 Q50,95 70,80" fill="none" stroke="white" strokeWidth="3" />
-              <rect x="20" y="20" width="10" height="15" rx="5" fill="#f0644c" />
-              <rect x="70" y="20" width="10" height="15" rx="5" fill="#f0644c" />
+              <rect x="20" y="20" width="10" height="15" rx="5" fill="#f0644c" className="robot-antenna" />
+              <rect x="70" y="20" width="10" height="15" rx="5" fill="#f0644c" className="robot-antenna" />
             </svg>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 bg-white border-r border-b border-gray-200"></div>
           </div>
@@ -173,7 +173,7 @@ export default function ChatAgent() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="hover:bg-white/20 rounded-full p-1 transition-colors"
+                className="hover:bg-white/20 rounded-full p-1 transition-colors close-button-hover"
                 aria-label="Close chat"
               >
                 <X className="h-5 w-5" />
@@ -225,7 +225,7 @@ export default function ChatAgent() {
                   type="submit"
                   disabled={isLoading || !message.trim()}
                   className={`rounded-full p-2 ${
-                    message.trim() ? "text-primary" : "text-gray-400"
+                    message.trim() ? "text-primary send-button-hover" : "text-gray-400"
                   }`}
                   aria-label="Send message"
                 >

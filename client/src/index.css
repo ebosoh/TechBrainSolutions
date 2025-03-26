@@ -209,3 +209,85 @@ html {
   animation: social-icon-bounce 0.5s ease-in-out;
   color: hsl(var(--primary)) !important;
 }
+
+@keyframes send-button-spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(20deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.send-button-hover:hover {
+  animation: send-button-spin 0.5s ease-in-out;
+  color: hsl(var(--primary)) !important;
+}
+
+@keyframes close-button-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+.close-button-hover:hover {
+  animation: close-button-spin 0.3s ease-in-out forwards;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Robot animation */
+.cartoon-robot .robot-eye {
+  animation: blink 3s infinite;
+}
+
+@keyframes blink {
+  0%, 45%, 55%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.1);
+  }
+}
+
+.cartoon-robot .robot-antenna {
+  transform-origin: bottom center;
+  animation: antenna-wiggle 2s ease-in-out infinite;
+}
+
+@keyframes antenna-wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* Chat launcher bounce animation */
+@keyframes launcher-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.chat-launcher {
+  animation: launcher-bounce 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.chat-launcher:hover {
+  transform: scale(1.1);
+  animation: none;
+}
