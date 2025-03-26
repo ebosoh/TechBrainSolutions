@@ -40,7 +40,7 @@ export default function Navbar() {
     <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-white/80 backdrop-blur-lg border-b border-primary/10" : "bg-transparent"}`}>
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-3xl font-heading font-bold">
+          <span className="text-3xl font-heading font-bold logo-hover inline-block">
             <span className="text-primary">Tech</span><span style={{ color: '#f0644c' }}>Brain</span>
           </span>
         </Link>
@@ -55,7 +55,7 @@ export default function Navbar() {
                 e.preventDefault();
                 handleNavClick(link.href);
               }}
-              className="font-medium text-neutral hover:text-primary transition duration-300 ease-in-out relative group"
+              className="font-medium text-neutral hover:text-primary transition duration-300 ease-in-out relative group nav-link-hover"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary rounded-full group-hover:w-full transition-all duration-300 ease-in-out transform origin-left group-hover:animate-[nav-underline_0.3s_ease-in-out]"></span>
@@ -85,7 +85,7 @@ export default function Navbar() {
         <div className="md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="focus:outline-none"
+            className="focus:outline-none menu-icon-hover transition-colors duration-300"
             aria-expanded={isOpen}
             aria-label="Toggle navigation menu"
           >
@@ -126,7 +126,7 @@ export default function Navbar() {
                     e.preventDefault();
                     handleNavClick(link.href);
                   }}
-                  className="font-medium text-neutral hover:text-primary py-2 transition duration-300 ease-in-out relative group"
+                  className="font-medium text-neutral hover:text-primary py-2 transition duration-300 ease-in-out relative group nav-link-hover"
                 >
                   {link.name}
                   <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full group-hover:w-1/2 transition-all duration-300 ease-in-out transform origin-left group-hover:animate-[nav-underline_0.3s_ease-in-out]"></span>
