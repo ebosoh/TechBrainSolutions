@@ -58,7 +58,10 @@ export default function ApplicationsManagementPage() {
   const [detailsOpen, setDetailsOpen] = useState(false);
 
   // Fetch all job applications
-  const { data: applications, isLoading, isError, refetch } = useQuery({
+  const { data: applications, isLoading, isError, refetch } = useQuery<{
+    success: boolean;
+    data: ApplicationWithCareerTitle[];
+  }>({
     queryKey: ["/api/applications"],
     queryFn: getQueryFn({ on401: "throw" }),
   });
@@ -254,7 +257,7 @@ export default function ApplicationsManagementPage() {
                           <div className="font-medium">{application.name}</div>
                           <div className="text-sm text-muted-foreground">{application.email}</div>
                         </TableCell>
-                        <TableCell>{application.careerTitle || "Unknown Position"}</TableCell>
+                        <TableCell>{application.careerTitle || (application.careerId ? "Unknown Position" : "General CV Submission")}</TableCell>
                         <TableCell>{getStatusBadge(application.status)}</TableCell>
                         <TableCell>{formatDate(application.submittedAt)}</TableCell>
                         <TableCell className="text-right">
@@ -312,7 +315,7 @@ export default function ApplicationsManagementPage() {
                     <h3 className="text-sm font-medium text-muted-foreground">Position Details</h3>
                     <div className="mt-2 space-y-2">
                       <div>
-                        <span className="font-medium">Position:</span> {selectedApplication.careerTitle || "Unknown Position"}
+                        <span className="font-medium">Position:</span> {selectedApplication.careerTitle || (selectedApplication.careerId ? "Unknown Position" : "General CV Submission")}
                       </div>
                       <div>
                         <span className="font-medium">Applied on:</span> {formatDate(selectedApplication.submittedAt)}

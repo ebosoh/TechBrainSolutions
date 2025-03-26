@@ -49,12 +49,7 @@ export default function CVSubmissionPage() {
     mutationFn: (data: CVSubmissionFormData) => {
       return apiRequest("/api/job-applications/cv", {
         method: "POST",
-        body: JSON.stringify({
-          ...data,
-          careerId: null, // General CV submission, not for a specific position
-          status: "pending",
-          applicationDate: new Date().toISOString()
-        })
+        body: JSON.stringify(data) // We've updated the server to handle the formatting
       });
     },
     onSuccess: () => {

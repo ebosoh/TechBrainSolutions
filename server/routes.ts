@@ -449,16 +449,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Dedicated CV Submission endpoint
   app.post("/api/job-applications/cv", async (req, res) => {
     try {
+      // Validate the data against our schema
       const validatedData = cvSubmissionSchema.parse(req.body);
       
-      // Create job application entry from CV submission
+      // Create job application entry from CV submission with appropriate data mapping
       const application = await storage.saveJobApplication({
         name: validatedData.name,
         email: validatedData.email,
         phone: validatedData.phone || "",
         resumeLink: validatedData.resumeLink,
         coverLetter: validatedData.experience,
-        careerId: undefined, // General application not tied to a specific position
         status: "pending",
         additionalInfo: JSON.stringify({
           linkedIn: validatedData.linkedIn,
@@ -466,7 +466,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       });
       
-      console.log("CV submission saved:", application);
+      console.log("CV submission saved successfully");
       
       res.status(201).json({ 
         success: true, 
