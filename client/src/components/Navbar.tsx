@@ -8,7 +8,6 @@ const navLinks = [
   { name: "Expertise", href: "#expertise" },
   { name: "About Us", href: "#about" },
   { name: "Metrics", href: "#data-visualization" },
-  { name: "Get in Touch", href: "#contact" },
 ];
 
 export default function Navbar() {
