@@ -67,7 +67,7 @@ export default function CareerDetail() {
   // Create mutation for job application submission
   const { mutate: submitApplication, isPending } = useMutation({
     mutationFn: (data: ApplicationValues) => {
-      return apiRequest('/api/job-applications', {
+      return apiRequest('/api/applications', {
         method: 'POST',
         body: JSON.stringify(data),
       });
@@ -79,7 +79,7 @@ export default function CareerDetail() {
         description: "Thank you for your application! We'll be in touch soon.",
       });
       // Invalidate queries to refresh the data
-      queryClient.invalidateQueries({ queryKey: ['/api/job-applications'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/applications'] });
     },
     onError: (error) => {
       toast({
