@@ -132,8 +132,7 @@ export const ServiceCard = forwardRef<HTMLDivElement, ServiceCardProps>(
           
           {/* Learn more button with enhanced hover effect */}
           <motion.button
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
               if (detailedInfo) {
                 setShowDetailedInfo(true);
               } else if (onLearnMoreClick) {
