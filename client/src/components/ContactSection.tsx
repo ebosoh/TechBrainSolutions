@@ -75,8 +75,8 @@ export default function ContactSection() {
     {
       icon: <FaEnvelope className="text-primary" />,
       title: "Email Us",
-      content: "info@techbrain.co.ke",
-      link: "mailto:info@techbrain.co.ke",
+      content: "hudson.eboso@techbrain.africa",
+      link: "mailto:hudson.eboso@techbrain.africa",
     },
     {
       icon: <FaPhone className="text-primary" />,

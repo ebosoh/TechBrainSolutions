@@ -108,7 +108,7 @@ export default function TermsPage() {
             <address className="mt-2 not-italic">
               TechBrain<br />
               University Way, Nairobi, Kenya<br />
-              Email: info@techbrain.co.ke<br />
+              Email: hudson.eboso@techbrain.africa<br />
               Phone: +254 (78) 0010010
             </address>
           </section>

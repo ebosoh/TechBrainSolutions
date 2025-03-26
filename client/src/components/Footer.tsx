@@ -25,7 +25,7 @@ export default function Footer() {
     },
     {
       icon: <FaEnvelope className="mt-1 mr-3 text-primary" />,
-      content: "info@techbrain.co.ke",
+      content: "hudson.eboso@techbrain.africa",
     },
     {
       icon: <FaPhone className="mt-1 mr-3 text-primary" />,
