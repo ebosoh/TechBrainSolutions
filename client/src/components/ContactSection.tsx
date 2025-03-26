@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { fadeIn, slideIn, staggerContainer } from "@/lib/animations";
 import { GrassTexture } from "@/components/ui/grass-texture";
@@ -37,6 +38,20 @@ export default function ContactSection() {
       message: ""
     }
   });
+  
+  // Check if the URL contains a CV hash parameter
+  React.useEffect(() => {
+    // Check if the URL has a #cv hash to indicate the user wants to send their CV
+    if (window.location.hash === '#cv') {
+      // Pre-fill the subject field for CV submissions
+      form.setValue('subject', 'CV Submission for Future Opportunities');
+      
+      // Scroll to the contact form
+      setTimeout(() => {
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    }
+  }, [form]);
   
   const contactMutation = useMutation({
     mutationFn: (data: ContactFormData) => {

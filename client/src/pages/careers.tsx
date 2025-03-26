@@ -254,7 +254,7 @@ export default function Careers() {
               We're always looking for talented individuals to join our team. Send us your resume, and 
               we'll keep it on file for future opportunities.
             </p>
-            <Link href="/contact">
+            <Link href="/contact#cv">
               <Button size="lg">
                 Send Your CV
               </Button>
