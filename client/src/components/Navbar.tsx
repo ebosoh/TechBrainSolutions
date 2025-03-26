@@ -55,9 +55,10 @@ export default function Navbar() {
                 e.preventDefault();
                 handleNavClick(link.href);
               }}
-              className="font-medium text-neutral hover:text-primary transition duration-300 ease-in-out"
+              className="font-medium text-neutral hover:text-primary transition duration-300 ease-in-out relative group"
             >
               {link.name}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary rounded-full group-hover:w-full transition-all duration-300 ease-in-out transform origin-left group-hover:animate-[nav-underline_0.3s_ease-in-out]"></span>
             </a>
           ))}
           <a
@@ -74,7 +75,7 @@ export default function Navbar() {
                 setIsOpen(false);
               }
             }}
-            className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1"
+            className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 nav-btn-pulse"
           >
             Get in Touch
           </a>
@@ -125,9 +126,10 @@ export default function Navbar() {
                     e.preventDefault();
                     handleNavClick(link.href);
                   }}
-                  className="font-medium text-neutral hover:text-primary py-2 transition duration-300 ease-in-out"
+                  className="font-medium text-neutral hover:text-primary py-2 transition duration-300 ease-in-out relative group"
                 >
                   {link.name}
+                  <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full group-hover:w-1/2 transition-all duration-300 ease-in-out transform origin-left group-hover:animate-[nav-underline_0.3s_ease-in-out]"></span>
                 </a>
               ))}
               <a
@@ -144,7 +146,7 @@ export default function Navbar() {
                     setIsOpen(false);
                   }
                 }}
-                className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl text-center transition-all duration-300 shadow-md"
+                className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl text-center transition-all duration-300 shadow-md nav-btn-pulse"
               >
                 Get in Touch
               </a>
