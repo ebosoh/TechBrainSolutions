@@ -7,16 +7,16 @@ const testimonials = [
   {
     content:
       "TechBrain completely transformed our approach to customer data. Their AI solution helped us increase conversions by 45% in just three months.",
-    author: "John Doe",
+    author: "Albert Mwangi",
     position: "Marketing Director, TechCompany",
-    initials: "JD",
+    initials: "AM",
   },
   {
     content:
       "The e-commerce platform TechBrain developed for us is not only beautiful but extremely functional. Sales are up 60% since launch!",
-    author: "Jane Smith",
+    author: "Allington O. A",
     position: "CEO, Retail Solutions",
-    initials: "JS",
+    initials: "AO",
   },
   {
     content:
