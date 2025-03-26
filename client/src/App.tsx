@@ -9,6 +9,7 @@ import TermsPage from "@/pages/terms";
 import PolicyPage from "@/pages/policy";
 import Dashboard from "@/pages/dashboard";
 import Careers from "@/pages/careers";
+import CareerDetail from "@/pages/career-detail";
 
 // Import dashboard related pages
 import DashboardCareers from "@/pages/dashboard/careers";
@@ -51,6 +52,7 @@ function Router() {
       <Route path="/terms" component={TermsPage} />
       <Route path="/policy" component={PolicyPage} />
       <Route path="/careers" component={Careers} />
+      <Route path="/career/:id" component={CareerDetail} />
       
       {/* Dashboard routes */}
       <Route path="/dashboard" component={Dashboard} />

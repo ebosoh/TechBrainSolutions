@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'wouter';
 import MainLayout from '@/layouts/MainLayout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -113,10 +114,12 @@ export default function Careers() {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button size="sm" variant="outline" className="group-hover:bg-primary group-hover:text-white transition-colors">
-                      View Position
-                      <ArrowRight className="h-4 w-4 ml-1" />
-                    </Button>
+                    <Link href={`/career/${career.id}`}>
+                      <Button size="sm" variant="outline" className="group-hover:bg-primary group-hover:text-white transition-colors">
+                        View Position
+                        <ArrowRight className="h-4 w-4 ml-1" />
+                      </Button>
+                    </Link>
                   </CardFooter>
                 </Card>
               ))
