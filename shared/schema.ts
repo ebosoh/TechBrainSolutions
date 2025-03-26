@@ -92,6 +92,40 @@ export const careerSchema = createInsertSchema(careers).pick({
 export type CareerData = z.infer<typeof careerSchema>;
 export type Career = typeof careers.$inferSelect;
 
+// Job Applications schema
+export const jobApplications = pgTable("job_applications", {
+  id: serial("id").primaryKey(),
+  careerId: integer("career_id").notNull(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  resumeLink: text("resume_link").notNull(),
+  coverLetter: text("cover_letter").notNull(),
+  status: text("status").notNull().default('pending'), // pending, reviewed, interviewing, rejected, hired
+  notes: text("notes"),
+  submittedAt: timestamp("submitted_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const jobApplicationSchema = createInsertSchema(jobApplications).pick({
+  careerId: true,
+  name: true,
+  email: true,
+  phone: true,
+  resumeLink: true,
+  coverLetter: true,
+  status: true,
+  notes: true,
+}).extend({
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(8, "Please enter a valid phone number"),
+  coverLetter: z.string().min(50, "Cover letter must be at least 50 characters"),
+  status: z.enum(['pending', 'reviewed', 'interviewing', 'rejected', 'hired']).default('pending'),
+});
+
+export type JobApplicationData = z.infer<typeof jobApplicationSchema>;
+export type JobApplication = typeof jobApplications.$inferSelect;
+
 // Website content schema
 export const websiteContent = pgTable("website_content", {
   id: serial("id").primaryKey(),
@@ -129,4 +163,10 @@ export const chatRequestSchema = z.object({
       content: z.string()
     })
   ).optional(),
+});
+
+// Job application status update schema
+export const applicationStatusUpdateSchema = z.object({
+  status: z.enum(['pending', 'reviewed', 'interviewing', 'rejected', 'hired']),
+  notes: z.string().optional(),
 });

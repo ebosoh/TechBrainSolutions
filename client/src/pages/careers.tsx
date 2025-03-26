@@ -7,21 +7,57 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Career } from '@shared/schema';
 import WavySeparator from '@/components/ui/wavy-separator';
-import { Briefcase, Building, MapPin, Calendar, ArrowRight } from 'lucide-react';
+import { Briefcase, Building, MapPin, Calendar, ArrowRight, Search, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from '@/components/ui/dropdown-menu';
 
 export default function Careers() {
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [sortBy, setSortBy] = useState<'recent' | 'title'>('recent');
   
   const { data: careers, isLoading } = useQuery<{ data: Career[] }>({ 
     queryKey: ['/api/careers']
   });
   
-  // Filter careers by type if a type is selected
+  // Filter and sort careers
   const filteredCareers = React.useMemo(() => {
     if (!careers?.data) return [];
-    if (!selectedType) return careers.data;
-    return careers.data.filter(career => career.type === selectedType);
-  }, [careers, selectedType]);
+    
+    // First apply type filter
+    let result = selectedType 
+      ? careers.data.filter(career => career.type === selectedType)
+      : careers.data;
+    
+    // Then apply search filter if there's a search term
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase();
+      result = result.filter(career => 
+        career.title.toLowerCase().includes(term) || 
+        career.description.toLowerCase().includes(term) ||
+        career.location.toLowerCase().includes(term) ||
+        career.requirements.toLowerCase().includes(term)
+      );
+    }
+    
+    // Sort the results
+    return result.sort((a, b) => {
+      if (sortBy === 'recent') {
+        // Sort by date, most recent first
+        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return dateB - dateA;
+      } else {
+        // Sort by title alphabetically
+        return a.title.localeCompare(b.title);
+      }
+    });
+  }, [careers, selectedType, searchTerm, sortBy]);
   
   // Get unique job types for filter
   const uniqueTypes = React.useMemo(() => {
@@ -33,11 +69,18 @@ export default function Careers() {
     return Array.from(types);
   }, [careers]);
 
+  // Handle clearing all filters
+  const clearFilters = () => {
+    setSelectedType(null);
+    setSearchTerm('');
+    setSortBy('recent');
+  };
+
   return (
     <MainLayout>
       <section className="pt-20 pb-12 md:pt-28 md:pb-16">
         <div className="container px-4 mx-auto">
-          <div className="max-w-3xl mx-auto text-center mb-12">
+          <div className="max-w-3xl mx-auto text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Join Our Team
             </h1>
@@ -45,11 +88,62 @@ export default function Careers() {
               We're looking for exceptional talent to help us build innovative solutions
               for our clients. Explore our open positions and find your next opportunity.
             </p>
+          </div>
+          
+          {/* Search and filter section */}
+          <div className="mb-8 max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="relative flex-grow">
+                <Input
+                  placeholder="Search positions..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pr-10"
+                />
+                {searchTerm && (
+                  <button 
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    onClick={() => setSearchTerm('')}
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+                {!searchTerm && (
+                  <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                )}
+              </div>
+              
+              <div className="flex gap-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline">
+                      Sort: {sortBy === 'recent' ? 'Most Recent' : 'Title A-Z'}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setSortBy('recent')}>
+                      Most Recent
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSortBy('title')}>
+                      Title A-Z
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                
+                {(selectedType || searchTerm || sortBy !== 'recent') && (
+                  <Button variant="ghost" onClick={clearFilters}>
+                    Reset
+                  </Button>
+                )}
+              </div>
+            </div>
             
-            <div className="flex flex-wrap gap-2 justify-center">
+            {/* Filter by type */}
+            <div className="flex flex-wrap gap-2 mt-4">
               <Button 
                 variant={selectedType === null ? "default" : "outline"}
                 onClick={() => setSelectedType(null)}
+                size="sm"
               >
                 All Positions
               </Button>
@@ -58,6 +152,7 @@ export default function Careers() {
                   key={type}
                   variant={selectedType === type ? "default" : "outline"}
                   onClick={() => setSelectedType(type)}
+                  size="sm"
                 >
                   {type}
                 </Button>
@@ -67,7 +162,17 @@ export default function Careers() {
           
           <WavySeparator />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+          {/* Filter summary */}
+          {filteredCareers.length > 0 && (
+            <div className="mb-6 mt-8 text-sm text-muted-foreground">
+              Showing {filteredCareers.length} {filteredCareers.length === 1 ? 'position' : 'positions'}
+              {selectedType && <span> in <strong>{selectedType}</strong></span>}
+              {searchTerm && <span> matching <strong>"{searchTerm}"</strong></span>}
+            </div>
+          )}
+          
+          {/* Job listings */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading ? (
               Array(3).fill(0).map((_, i) => (
                 <Card key={i} className="animate-pulse">
@@ -126,12 +231,19 @@ export default function Careers() {
             ) : (
               <div className="col-span-full text-center py-12">
                 <Briefcase className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium mb-2">No Positions Available</h3>
+                <h3 className="text-lg font-medium mb-2">No Positions Found</h3>
                 <p className="text-muted-foreground max-w-md mx-auto">
-                  {selectedType 
-                    ? `There are currently no openings for ${selectedType} positions.` 
-                    : "There are currently no job openings available. Please check back later."}
+                  {searchTerm 
+                    ? `No positions match your search for "${searchTerm}".` 
+                    : selectedType 
+                      ? `There are currently no openings for ${selectedType} positions.` 
+                      : "There are currently no job openings available. Please check back later."}
                 </p>
+                {(searchTerm || selectedType) && (
+                  <Button variant="outline" onClick={clearFilters} className="mt-4">
+                    Clear Filters
+                  </Button>
+                )}
               </div>
             )}
           </div>
@@ -142,9 +254,11 @@ export default function Careers() {
               We're always looking for talented individuals to join our team. Send us your resume, and 
               we'll keep it on file for future opportunities.
             </p>
-            <Button size="lg">
-              Send Your CV
-            </Button>
+            <Link href="/contact">
+              <Button size="lg">
+                Send Your CV
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

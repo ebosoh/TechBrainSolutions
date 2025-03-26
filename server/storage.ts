@@ -1,10 +1,11 @@
 import { 
-  users, contactForm, chatMessages, careers, websiteContent,
+  users, contactForm, chatMessages, careers, websiteContent, jobApplications,
   type User, type InsertUser, 
   type ContactFormData, type ContactForm, 
   type ChatMessageData, type ChatMessage,
   type CareerData, type Career,
-  type WebsiteContentData, type WebsiteContent
+  type WebsiteContentData, type WebsiteContent,
+  type JobApplicationData, type JobApplication
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, asc, and, like } from "drizzle-orm";
@@ -33,6 +34,13 @@ export interface IStorage {
   deleteCareer(id: number): Promise<boolean>;
   getCareer(id: number): Promise<Career | undefined>;
   getCareers(limit?: number): Promise<Career[]>;
+  
+  // Job Application related methods
+  saveJobApplication(applicationData: JobApplicationData): Promise<JobApplication>;
+  getJobApplicationById(id: number): Promise<JobApplication | undefined>;
+  getJobApplicationsByCareerId(careerId: number): Promise<JobApplication[]>;
+  getAllJobApplications(limit?: number): Promise<JobApplication[]>;
+  updateJobApplicationStatus(id: number, status: string, notes?: string): Promise<JobApplication>;
   
   // CMS related methods
   saveContent(contentData: WebsiteContentData): Promise<WebsiteContent>;
@@ -133,6 +141,73 @@ export class DatabaseStorage implements IStorage {
     return await query;
   }
   
+  // Job Application related methods
+  async saveJobApplication(applicationData: JobApplicationData): Promise<JobApplication> {
+    const result = await db.insert(jobApplications).values(applicationData).returning();
+    return result[0];
+  }
+  
+  async getJobApplicationById(id: number): Promise<JobApplication | undefined> {
+    const result = await db
+      .select()
+      .from(jobApplications)
+      .where(eq(jobApplications.id, id));
+      
+    return result.length > 0 ? result[0] : undefined;
+  }
+  
+  async getJobApplicationsByCareerId(careerId: number): Promise<JobApplication[]> {
+    return await db
+      .select()
+      .from(jobApplications)
+      .where(eq(jobApplications.careerId, careerId))
+      .orderBy(desc(jobApplications.submittedAt));
+  }
+  
+  async getAllJobApplications(limit?: number): Promise<JobApplication[]> {
+    const query = db
+      .select({
+        application: jobApplications,
+        careerTitle: careers.title
+      })
+      .from(jobApplications)
+      .leftJoin(careers, eq(jobApplications.careerId, careers.id))
+      .orderBy(desc(jobApplications.submittedAt));
+      
+    if (limit) {
+      query.limit(limit);
+    }
+    
+    const results = await query;
+    
+    // Transform the results to return JobApplication objects
+    return results.map(result => ({
+      ...result.application,
+      careerTitle: result.careerTitle
+    })) as JobApplication[];
+  }
+  
+  async updateJobApplicationStatus(id: number, status: string, notes?: string): Promise<JobApplication> {
+    const now = new Date();
+    
+    const updateData: any = {
+      status,
+      updatedAt: now
+    };
+    
+    if (notes !== undefined) {
+      updateData.notes = notes;
+    }
+    
+    const result = await db
+      .update(jobApplications)
+      .set(updateData)
+      .where(eq(jobApplications.id, id))
+      .returning();
+      
+    return result[0];
+  }
+  
   // CMS related methods
   async saveContent(contentData: WebsiteContentData): Promise<WebsiteContent> {
     const result = await db.insert(websiteContent).values(contentData).returning();
@@ -194,11 +269,13 @@ export class MemStorage implements IStorage {
   private chatMessages: Map<number, ChatMessage>;
   private careers: Map<number, Career>;
   private websiteContents: Map<number, WebsiteContent>;
+  private jobApplications: Map<number, JobApplication>;
   userCurrentId: number;
   contactFormCurrentId: number;
   chatMessageCurrentId: number;
   careerCurrentId: number;
   contentCurrentId: number;
+  jobApplicationCurrentId: number;
 
   constructor() {
     this.users = new Map();
@@ -206,11 +283,13 @@ export class MemStorage implements IStorage {
     this.chatMessages = new Map();
     this.careers = new Map();
     this.websiteContents = new Map();
+    this.jobApplications = new Map();
     this.userCurrentId = 1;
     this.contactFormCurrentId = 1;
     this.chatMessageCurrentId = 1;
     this.careerCurrentId = 1;
     this.contentCurrentId = 1;
+    this.jobApplicationCurrentId = 1;
   }
 
   // User related methods
@@ -357,6 +436,82 @@ export class MemStorage implements IStorage {
     }
     
     return careers;
+  }
+  
+  // Job Application related methods
+  async saveJobApplication(applicationData: JobApplicationData): Promise<JobApplication> {
+    const id = this.jobApplicationCurrentId++;
+    const submittedAt = new Date();
+    const updatedAt = new Date();
+    
+    const application: JobApplication = {
+      ...applicationData,
+      id,
+      submittedAt,
+      updatedAt
+    };
+    
+    this.jobApplications.set(id, application);
+    return application;
+  }
+  
+  async getJobApplicationById(id: number): Promise<JobApplication | undefined> {
+    return this.jobApplications.get(id);
+  }
+  
+  async getJobApplicationsByCareerId(careerId: number): Promise<JobApplication[]> {
+    return Array.from(this.jobApplications.values())
+      .filter(app => app.careerId === careerId)
+      .sort((a, b) => {
+        const timeA = a.submittedAt ? a.submittedAt.getTime() : 0;
+        const timeB = b.submittedAt ? b.submittedAt.getTime() : 0;
+        return timeB - timeA; // Descending
+      });
+  }
+  
+  async getAllJobApplications(limit?: number): Promise<JobApplication[]> {
+    // Get all applications
+    let applications = Array.from(this.jobApplications.values())
+      .sort((a, b) => {
+        const timeA = a.submittedAt ? a.submittedAt.getTime() : 0;
+        const timeB = b.submittedAt ? b.submittedAt.getTime() : 0;
+        return timeB - timeA; // Descending
+      });
+    
+    // Add career title to each application
+    const applicationsWithTitle = applications.map(app => {
+      const career = this.careers.get(app.careerId);
+      return {
+        ...app,
+        careerTitle: career ? career.title : 'Unknown Position'
+      };
+    });
+    
+    if (limit) {
+      applications = applicationsWithTitle.slice(0, limit);
+    } else {
+      applications = applicationsWithTitle;
+    }
+    
+    return applications;
+  }
+  
+  async updateJobApplicationStatus(id: number, status: string, notes?: string): Promise<JobApplication> {
+    const application = this.jobApplications.get(id);
+    if (!application) {
+      throw new Error(`Application with id ${id} not found`);
+    }
+    
+    const updatedAt = new Date();
+    const updatedApplication: JobApplication = {
+      ...application,
+      status,
+      updatedAt,
+      notes: notes !== undefined ? notes : application.notes
+    };
+    
+    this.jobApplications.set(id, updatedApplication);
+    return updatedApplication;
   }
   
   // CMS related methods
