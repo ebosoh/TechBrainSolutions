@@ -74,10 +74,10 @@ const DetailModal = ({
         <p className="text-gray-700 mb-6">{description}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Trending Services */}
+          {/* Services */}
           <div>
             <h3 className="text-lg font-bold text-primary mb-4 border-b border-primary/20 pb-2">
-              Trending Services
+              Services
             </h3>
             <ul className="space-y-3">
               {detailedInfo.trendingServices.map((service, index) => (
@@ -92,10 +92,10 @@ const DetailModal = ({
             </ul>
           </div>
 
-          {/* Trending Products */}
+          {/* Products */}
           <div>
             <h3 className="text-lg font-bold text-primary mb-4 border-b border-primary/20 pb-2">
-              Trending Products
+              Products
             </h3>
             <ul className="space-y-3">
               {detailedInfo.trendingProducts.map((product, index) => (
