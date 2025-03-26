@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar, unique } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -95,7 +95,7 @@ export type Career = typeof careers.$inferSelect;
 // Website content schema
 export const websiteContent = pgTable("website_content", {
   id: serial("id").primaryKey(),
-  section: text("section").notNull().unique(),
+  section: text("section").notNull(),
   key: text("key").notNull(),
   title: text("title"),
   content: text("content").notNull(),

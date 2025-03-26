@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Career } from '@shared/schema';
 import WavySeparator from '@/components/ui/wavy-separator';
-import { Career as LucideCareer, Building, MapPin, Calendar, ArrowRight } from 'lucide-react';
+import { Briefcase, Building, MapPin, Calendar, ArrowRight } from 'lucide-react';
 
 export default function Careers() {
   const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -122,7 +122,7 @@ export default function Careers() {
               ))
             ) : (
               <div className="col-span-full text-center py-12">
-                <LucideCareer className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                <Briefcase className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-medium mb-2">No Positions Available</h3>
                 <p className="text-muted-foreground max-w-md mx-auto">
                   {selectedType 
