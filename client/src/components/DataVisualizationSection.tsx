@@ -155,7 +155,7 @@ export default function DataVisualizationSection() {
       const interval = 16; // ms
       
       const totalSteps = animationDuration / interval;
-      const projectsIncrement = 200 / totalSteps;
+      const projectsIncrement = 100 / totalSteps;
       const retentionIncrement = 94 / totalSteps;
       const teamGrowthIncrement = 45 / totalSteps;
       const techStackIncrement = 12 / totalSteps;
@@ -164,7 +164,7 @@ export default function DataVisualizationSection() {
         count++;
         
         // Update all counters
-        setProjectsCount(Math.min(200, Math.floor(projectsIncrement * count)));
+        setProjectsCount(Math.min(100, Math.floor(projectsIncrement * count)));
         setRetentionCount(Math.min(94, Math.floor(retentionIncrement * count)));
         setTeamGrowthCount(Math.min(45, Math.floor(teamGrowthIncrement * count)));
         setTechStackCount(Math.min(12, Math.floor(techStackIncrement * count)));
@@ -174,7 +174,7 @@ export default function DataVisualizationSection() {
           clearInterval(timer);
           
           // Ensure final values are set exactly
-          setProjectsCount(200);
+          setProjectsCount(100);
           setRetentionCount(94);
           setTeamGrowthCount(45);
           setTechStackCount(12);
