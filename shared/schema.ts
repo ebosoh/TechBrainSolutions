@@ -1,17 +1,27 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// User schema from the original file
+// User schema with enhanced roles for admin dashboard
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  role: text("role").notNull().default('user'), // admin, editor, user
+  email: text("email"),
+  fullName: text("full_name"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
+  role: true,
+  email: true,
+  fullName: true,
+}).extend({
+  email: z.string().email("Please enter a valid email address").optional(),
+  role: z.enum(['admin', 'editor', 'user']).default('user'),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -85,10 +95,29 @@ export type Career = typeof careers.$inferSelect;
 // Website content schema
 export const websiteContent = pgTable("website_content", {
   id: serial("id").primaryKey(),
-  section: text("section").notNull(),
-  content: jsonb("content").notNull(),
+  section: text("section").notNull().unique(),
+  key: text("key").notNull(),
+  title: text("title"),
+  content: text("content").notNull(),
+  type: text("type").notNull().default('text'), // text, html, image, video
+  active: boolean("active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
+
+export const websiteContentSchema = createInsertSchema(websiteContent).pick({
+  section: true,
+  key: true,
+  title: true,
+  content: true,
+  type: true,
+  active: true,
+}).extend({
+  type: z.enum(['text', 'html', 'image', 'video']).default('text'),
+});
+
+export type WebsiteContentData = z.infer<typeof websiteContentSchema>;
+export type WebsiteContent = typeof websiteContent.$inferSelect;
 
 // Chat request schema for validation
 export const chatRequestSchema = z.object({
