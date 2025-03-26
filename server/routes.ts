@@ -14,16 +14,13 @@ import bcrypt from "bcryptjs";
 
 // CV Submission schema
 const cvSubmissionSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Please enter a valid email"),
   phone: z.string().optional(),
   linkedIn: z.string().optional(),
   portfolio: z.string().optional(),
-  experience: z.string().min(10),
-  resumeLink: z.string().url(),
-  careerId: z.number().nullable(),
-  status: z.string(),
-  applicationDate: z.string()
+  experience: z.string().min(10, "Please provide a brief description of your experience"),
+  resumeLink: z.string().url("Please provide a valid URL to your resume/CV")
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -456,14 +453,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Create job application entry from CV submission
       const application = await storage.saveJobApplication({
-        fullName: validatedData.name,
+        name: validatedData.name,
         email: validatedData.email,
         phone: validatedData.phone || "",
         resumeLink: validatedData.resumeLink,
         coverLetter: validatedData.experience,
-        careerId: null, // General application not tied to a specific position
+        careerId: undefined, // General application not tied to a specific position
         status: "pending",
-        applicationDate: new Date().toISOString(),
         additionalInfo: JSON.stringify({
           linkedIn: validatedData.linkedIn,
           portfolio: validatedData.portfolio
