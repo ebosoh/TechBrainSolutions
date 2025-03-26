@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
 import { fadeIn } from "@/lib/animations";
+import { apiRequest } from "@/lib/queryClient";
+import { User } from "@shared/schema";
 
 const navLinks = [
   { name: "Home", href: "#home" },
   { name: "Expertise", href: "#expertise" },
   { name: "About Us", href: "#about" },
   { name: "Metrics", href: "#data-visualization" },
+  { name: "Careers", href: "/careers" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [, navigate] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +26,23 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  
+  // Check if user is logged in and is an admin
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await apiRequest<{ user: User }>('/api/auth/session');
+        if (response.user) {
+          setUser(response.user);
+          setIsAdmin(response.user.role === 'admin');
+        }
+      } catch (error) {
+        // Not logged in or error, leave user as null
+        console.log("Not logged in");
+      }
+    };
+    checkSession();
   }, []);
 
   const handleNavClick = (href: string) => {
@@ -33,6 +56,9 @@ export default function Navbar() {
           behavior: "smooth",
         });
       }
+    } else {
+      // For regular links like "/careers", navigate directly
+      window.location.href = href;
     }
   };
 
@@ -61,6 +87,18 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary rounded-full group-hover:w-full transition-all duration-300 ease-in-out transform origin-left group-hover:animate-[nav-underline_0.3s_ease-in-out]"></span>
             </a>
           ))}
+          
+          {/* Show Dashboard link only for admin users */}
+          {isAdmin && (
+            <Link
+              href="/dashboard"
+              className="font-medium text-neutral hover:text-primary transition duration-300 ease-in-out relative group nav-link-hover"
+            >
+              Dashboard
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary rounded-full group-hover:w-full transition-all duration-300 ease-in-out transform origin-left group-hover:animate-[nav-underline_0.3s_ease-in-out]"></span>
+            </Link>
+          )}
+          
           <a
             href="#contact"
             onClick={(e) => {
@@ -132,6 +170,18 @@ export default function Navbar() {
                   <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full group-hover:w-1/2 transition-all duration-300 ease-in-out transform origin-left group-hover:animate-[nav-underline_0.3s_ease-in-out]"></span>
                 </a>
               ))}
+              
+              {/* Show Dashboard link in mobile menu for admin users */}
+              {isAdmin && (
+                <Link
+                  href="/dashboard"
+                  className="font-medium text-neutral hover:text-primary py-2 transition duration-300 ease-in-out relative group nav-link-hover"
+                >
+                  Dashboard
+                  <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full group-hover:w-1/2 transition-all duration-300 ease-in-out transform origin-left group-hover:animate-[nav-underline_0.3s_ease-in-out]"></span>
+                </Link>
+              )}
+              
               <a
                 href="#contact"
                 onClick={(e) => {
