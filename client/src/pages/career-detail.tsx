@@ -107,9 +107,7 @@ export default function CareerDetail() {
     queryKey: ['/api/careers', careerId],
     queryFn: async () => {
       if (!careerId) return null;
-      const res = await fetch(`/api/careers/${careerId}`);
-      if (!res.ok) throw new Error('Failed to fetch career details');
-      return res.json();
+      return apiRequest(`/api/careers/${careerId}`);
     },
     enabled: !!careerId,
   });
