@@ -50,20 +50,45 @@ Keep responses under 150 words unless a detailed explanation is necessary.`
     };
 
     // Simple response generation logic
-    let aiResponse = "I'm sorry, I don't have specific information about that topic. Would you like me to connect you with a human representative who can better address your questions?";
+    let aiResponse = "I'm sorry, I don't have specific information about that topic. 🤔 Would you like me to connect you with a human representative who can better address your questions?";
     
     // Check for keywords in the message (case insensitive)
     const lowerMessage = message.toLowerCase();
     for (const [keyword, response] of Object.entries(keywords)) {
       if (lowerMessage.includes(keyword.toLowerCase())) {
-        aiResponse = response;
+        // Add emojis based on the keyword
+        let emoji = "";
+        if (keyword === "ai") emoji = "🤖 ";
+        else if (keyword === "machine learning") emoji = "🧠 ";
+        else if (keyword === "big data") emoji = "📊 ";
+        else if (keyword === "web design") emoji = "🎨 ";
+        else if (keyword === "e-commerce") emoji = "🛒 ";
+        else if (keyword === "marketing") emoji = "📈 ";
+        else if (keyword === "contact") emoji = "📞 ";
+        else if (keyword === "service") emoji = "🛠️ ";
+        else if (keyword === "hello" || keyword === "hi") emoji = "👋 ";
+        else if (keyword === "help") emoji = "🆘 ";
+        
+        aiResponse = emoji + response;
         break;
       }
     }
     
     // If no keyword match, provide a general response for questions
     if (aiResponse.includes("I'm sorry") && lowerMessage.includes("?")) {
-      aiResponse = "That's a great question. TechBrain offers comprehensive technology solutions across AI, Big Data, Web Design, E-commerce, and Digital Marketing. For more specific details on this inquiry, I'd recommend filling out our contact form so our specialists can provide you with detailed information tailored to your needs.";
+      aiResponse = "That's a great question! 💡 TechBrain offers comprehensive technology solutions across AI, Big Data, Web Design, E-commerce, and Digital Marketing. For more specific details on this inquiry, I'd recommend filling out our contact form so our specialists can provide you with detailed information tailored to your needs. ✨";
+    }
+    
+    // Add a random friendly emoji at the end if not already present
+    const friendlyEmojis = ["😊", "👍", "✨", "🚀", "💯", "🔥", "⭐", "🌟"];
+    
+    // Simple check if the last character is likely an emoji by checking if it's in our list
+    const lastChar = aiResponse.trim().slice(-1);
+    const alreadyHasEmoji = friendlyEmojis.some(emoji => emoji.includes(lastChar));
+    
+    if (!alreadyHasEmoji) {
+      const randomEmoji = friendlyEmojis[Math.floor(Math.random() * friendlyEmojis.length)];
+      aiResponse = aiResponse + " " + randomEmoji;
     }
     
     log(`Response generated: ${aiResponse.substring(0, 100)}...`, "chat-api");
