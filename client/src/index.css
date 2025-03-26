@@ -192,3 +192,20 @@ html {
 .logo-hover:hover {
   animation: logo-color-cycle 1s ease-in-out;
 }
+
+@keyframes social-icon-bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.social-icon-hover:hover {
+  animation: social-icon-bounce 0.5s ease-in-out;
+  color: hsl(var(--primary)) !important;
+}
