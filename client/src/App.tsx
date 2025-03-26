@@ -13,6 +13,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/terms" component={TermsPage} />
       <Route path="/policy" component={PolicyPage} />
+      <Route path="/dashboard" component={() => import("@/pages/dashboard")} />
+      <Route path="/careers" component={() => import("@/pages/careers")} />
       <Route component={NotFound} />
     </Switch>
   );

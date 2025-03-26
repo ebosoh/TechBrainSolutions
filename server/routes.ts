@@ -111,5 +111,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   const httpServer = createServer(app);
 
+  // Career routes
+  app.post("/api/careers", async (req, res) => {
+    try {
+      const career = await storage.createCareer(req.body);
+      res.status(201).json({ success: true, data: career });
+    } catch (error) {
+      console.error("Error creating career:", error);
+      res.status(500).json({ success: false, message: "Error creating career" });
+    }
+  });
+
+  app.get("/api/careers", async (req, res) => {
+    try {
+      const careers = await storage.getCareers();
+      res.status(200).json({ success: true, data: careers });
+    } catch (error) {
+      console.error("Error fetching careers:", error);
+      res.status(500).json({ success: false, message: "Error fetching careers" });
+    }
+  });
+
+  // Dashboard routes
+  app.get("/api/dashboard/enquiries", async (req, res) => {
+    try {
+      const enquiries = await storage.getContactForms();
+      res.status(200).json({ success: true, data: enquiries });
+    } catch (error) {
+      console.error("Error fetching enquiries:", error);
+      res.status(500).json({ success: false, message: "Error fetching enquiries" });
+    }
+  });
+
+  app.put("/api/content/:section", async (req, res) => {
+    try {
+      const content = await storage.updateContent(req.params.section, req.body);
+      res.status(200).json({ success: true, data: content });
+    } catch (error) {
+      console.error("Error updating content:", error);
+      res.status(500).json({ success: false, message: "Error updating content" });
+    }
+  });
+
   return httpServer;
 }

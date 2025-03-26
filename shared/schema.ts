@@ -60,6 +60,36 @@ export const chatMessageSchema = createInsertSchema(chatMessages).pick({
 export type ChatMessageData = z.infer<typeof chatMessageSchema>;
 export type ChatMessage = typeof chatMessages.$inferSelect;
 
+// Career related schemas
+export const careers = pgTable("careers", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  requirements: text("requirements").notNull(),
+  location: text("location").notNull(),
+  type: text("type").notNull(), // full-time, part-time, contract
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const careerSchema = createInsertSchema(careers).pick({
+  title: true,
+  description: true,
+  requirements: true,
+  location: true,
+  type: true,
+});
+
+export type CareerData = z.infer<typeof careerSchema>;
+export type Career = typeof careers.$inferSelect;
+
+// Website content schema
+export const websiteContent = pgTable("website_content", {
+  id: serial("id").primaryKey(),
+  section: text("section").notNull(),
+  content: jsonb("content").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Chat request schema for validation
 export const chatRequestSchema = z.object({
   message: z.string().min(1),
