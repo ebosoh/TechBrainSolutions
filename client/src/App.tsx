@@ -10,6 +10,7 @@ import PolicyPage from "@/pages/policy";
 import Dashboard from "@/pages/dashboard";
 import Careers from "@/pages/careers";
 import CareerDetail from "@/pages/career-detail";
+import ContactPage from "@/pages/contact";
 
 // Import dashboard related pages
 import DashboardCareers from "@/pages/dashboard/careers";
@@ -54,6 +55,7 @@ function Router() {
       <Route path="/policy" component={PolicyPage} />
       <Route path="/careers" component={Careers} />
       <Route path="/career/:id" component={CareerDetail} />
+      <Route path="/contact" component={ContactPage} />
       
       {/* Dashboard routes */}
       <Route path="/dashboard" component={Dashboard} />
