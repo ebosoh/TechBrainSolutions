@@ -11,6 +11,7 @@ import Dashboard from "@/pages/dashboard";
 import Careers from "@/pages/careers";
 import CareerDetail from "@/pages/career-detail";
 import ContactPage from "@/pages/contact";
+import CVSubmissionPage from "@/pages/cv-submission";
 
 // Import dashboard related pages
 import DashboardCareers from "@/pages/dashboard/careers";
@@ -56,6 +57,7 @@ function Router() {
       <Route path="/careers" component={Careers} />
       <Route path="/career/:id" component={CareerDetail} />
       <Route path="/contact" component={ContactPage} />
+      <Route path="/cv-submission" component={CVSubmissionPage} />
       
       {/* Dashboard routes */}
       <Route path="/dashboard" component={Dashboard} />

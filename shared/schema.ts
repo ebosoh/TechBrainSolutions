@@ -95,7 +95,7 @@ export type Career = typeof careers.$inferSelect;
 // Job Applications schema
 export const jobApplications = pgTable("job_applications", {
   id: serial("id").primaryKey(),
-  careerId: integer("career_id").notNull(),
+  careerId: integer("career_id"), // Nullable for general CV submissions
   name: text("name").notNull(),
   email: text("email").notNull(),
   phone: text("phone").notNull(),
@@ -103,6 +103,7 @@ export const jobApplications = pgTable("job_applications", {
   coverLetter: text("cover_letter").notNull(),
   status: text("status").notNull().default('pending'), // pending, reviewed, interviewing, rejected, hired
   notes: text("notes"),
+  additionalInfo: text("additional_info"), // For storing extra information like LinkedIn, portfolio links
   submittedAt: timestamp("submitted_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -116,11 +117,14 @@ export const jobApplicationSchema = createInsertSchema(jobApplications).pick({
   coverLetter: true,
   status: true,
   notes: true,
+  additionalInfo: true,
 }).extend({
+  careerId: z.number().optional(), // Make careerId optional for general CV submissions
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(8, "Please enter a valid phone number"),
   coverLetter: z.string().min(50, "Cover letter must be at least 50 characters"),
   status: z.enum(['pending', 'reviewed', 'interviewing', 'rejected', 'hired']).default('pending'),
+  additionalInfo: z.string().optional(),
 });
 
 export type JobApplicationData = z.infer<typeof jobApplicationSchema>;

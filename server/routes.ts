@@ -12,6 +12,20 @@ import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 
+// CV Submission schema
+const cvSubmissionSchema = z.object({
+  name: z.string().min(2),
+  email: z.string().email(),
+  phone: z.string().optional(),
+  linkedIn: z.string().optional(),
+  portfolio: z.string().optional(),
+  experience: z.string().min(10),
+  resumeLink: z.string().url(),
+  careerId: z.number().nullable(),
+  status: z.string(),
+  applicationDate: z.string()
+});
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission route
   app.post("/api/contact", async (req, res) => {
@@ -431,6 +445,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         console.error("Error submitting job application:", error);
         res.status(500).json({ success: false, message: "Error submitting job application" });
+      }
+    }
+  });
+  
+  // Dedicated CV Submission endpoint
+  app.post("/api/job-applications/cv", async (req, res) => {
+    try {
+      const validatedData = cvSubmissionSchema.parse(req.body);
+      
+      // Create job application entry from CV submission
+      const application = await storage.saveJobApplication({
+        fullName: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone || "",
+        resumeLink: validatedData.resumeLink,
+        coverLetter: validatedData.experience,
+        careerId: null, // General application not tied to a specific position
+        status: "pending",
+        applicationDate: new Date().toISOString(),
+        additionalInfo: JSON.stringify({
+          linkedIn: validatedData.linkedIn,
+          portfolio: validatedData.portfolio
+        })
+      });
+      
+      console.log("CV submission saved:", application);
+      
+      res.status(201).json({ 
+        success: true, 
+        message: "CV submitted successfully",
+        data: application 
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({
+          success: false,
+          message: "Validation error",
+          errors: error.errors
+        });
+      } else {
+        console.error("Error submitting CV:", error);
+        res.status(500).json({ success: false, message: "Error submitting CV" });
       }
     }
   });
