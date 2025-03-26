@@ -101,70 +101,46 @@ export default function DataVisualizationSection() {
     return () => clearInterval(interval);
   }, []);
   
-  // Counter animation for stats
+  // Counter animation for stats using framer-motion animate functionality
   useEffect(() => {
-    // Projects counter animation (0 to 200)
-    const projectsDuration = 2000; // ms
-    const projectsIncrement = 200 / (projectsDuration / 16);
-    let projectsCurrentCount = 0;
+    // Using a setTimeout to allow the component to render first
+    const animationTimeout = setTimeout(() => {
+      // Start all the counting animations
+      let count = 0;
+      const animationDuration = 2000; // ms
+      const interval = 16; // ms
+      
+      const totalSteps = animationDuration / interval;
+      const projectsIncrement = 200 / totalSteps;
+      const retentionIncrement = 94 / totalSteps;
+      const teamGrowthIncrement = 45 / totalSteps;
+      const techStackIncrement = 12 / totalSteps;
+      
+      const timer = setInterval(() => {
+        count++;
+        
+        // Update all counters
+        setProjectsCount(Math.min(200, Math.floor(projectsIncrement * count)));
+        setRetentionCount(Math.min(94, Math.floor(retentionIncrement * count)));
+        setTeamGrowthCount(Math.min(45, Math.floor(teamGrowthIncrement * count)));
+        setTechStackCount(Math.min(12, Math.floor(techStackIncrement * count)));
+        
+        // Clear interval when animation completes
+        if (count >= totalSteps) {
+          clearInterval(timer);
+          
+          // Ensure final values are set exactly
+          setProjectsCount(200);
+          setRetentionCount(94);
+          setTeamGrowthCount(45);
+          setTechStackCount(12);
+        }
+      }, interval);
+      
+      return () => clearInterval(timer);
+    }, 500);
     
-    const projectsTimer = setInterval(() => {
-      projectsCurrentCount += projectsIncrement;
-      if (projectsCurrentCount >= 200) {
-        projectsCurrentCount = 200;
-        clearInterval(projectsTimer);
-      }
-      setProjectsCount(Math.floor(projectsCurrentCount));
-    }, 16);
-    
-    // Retention counter animation (0 to 94)
-    const retentionDuration = 2000; // ms
-    const retentionIncrement = 94 / (retentionDuration / 16);
-    let retentionCurrentCount = 0;
-    
-    const retentionTimer = setInterval(() => {
-      retentionCurrentCount += retentionIncrement;
-      if (retentionCurrentCount >= 94) {
-        retentionCurrentCount = 94;
-        clearInterval(retentionTimer);
-      }
-      setRetentionCount(Math.floor(retentionCurrentCount));
-    }, 16);
-    
-    // Team Growth counter animation (0 to 45)
-    const teamGrowthDuration = 2000; // ms
-    const teamGrowthIncrement = 45 / (teamGrowthDuration / 16);
-    let teamGrowthCurrentCount = 0;
-    
-    const teamGrowthTimer = setInterval(() => {
-      teamGrowthCurrentCount += teamGrowthIncrement;
-      if (teamGrowthCurrentCount >= 45) {
-        teamGrowthCurrentCount = 45;
-        clearInterval(teamGrowthTimer);
-      }
-      setTeamGrowthCount(Math.floor(teamGrowthCurrentCount));
-    }, 16);
-    
-    // Tech Stack counter animation (0 to 12)
-    const techStackDuration = 2000; // ms
-    const techStackIncrement = 12 / (techStackDuration / 16);
-    let techStackCurrentCount = 0;
-    
-    const techStackTimer = setInterval(() => {
-      techStackCurrentCount += techStackIncrement;
-      if (techStackCurrentCount >= 12) {
-        techStackCurrentCount = 12;
-        clearInterval(techStackTimer);
-      }
-      setTechStackCount(Math.floor(techStackCurrentCount));
-    }, 16);
-    
-    return () => {
-      clearInterval(projectsTimer);
-      clearInterval(retentionTimer);
-      clearInterval(teamGrowthTimer);
-      clearInterval(techStackTimer);
-    };
+    return () => clearTimeout(animationTimeout);
   }, []);
   
   const chartAnimationVariants = {

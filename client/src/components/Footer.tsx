@@ -35,9 +35,9 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/techbrainco/?viewAsMember=true" },
-    { icon: <FaTwitter />, href: "#" },
-    { icon: <FaFacebookF />, href: "#" },
-    { icon: <FaInstagram />, href: "#" },
+    { icon: <FaTwitter />, href: "https://twitter.com" },
+    { icon: <FaFacebookF />, href: "https://facebook.com" },
+    { icon: <FaInstagram />, href: "https://instagram.com" },
   ];
 
   const scrollToSection = (id: string) => {

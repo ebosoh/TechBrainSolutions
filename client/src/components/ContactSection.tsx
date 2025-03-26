@@ -13,6 +13,18 @@ import { contactFormSchema, type ContactFormData } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 import { FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedinIn, FaTwitter, FaFacebookF, FaInstagram } from "react-icons/fa";
 
+interface ContactInfoItem {
+  icon: React.ReactNode;
+  title: string;
+  content: string;
+  link?: string;
+}
+
+interface SocialLink {
+  icon: React.ReactNode;
+  href: string;
+}
+
 export default function ContactSection() {
   const { toast } = useToast();
   
@@ -28,7 +40,10 @@ export default function ContactSection() {
   
   const contactMutation = useMutation({
     mutationFn: (data: ContactFormData) => {
-      return apiRequest("POST", "/api/contact", data);
+      return apiRequest("/api/contact", {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
     },
     onSuccess: () => {
       toast({
@@ -55,25 +70,27 @@ export default function ContactSection() {
     {
       icon: <FaMapMarkerAlt className="text-primary" />,
       title: "Our Location",
-      content: "123 Tech Avenue, Innovation District, CA 94043",
+      content: "University Way, Nairobi, Kenya",
     },
     {
       icon: <FaEnvelope className="text-primary" />,
       title: "Email Us",
-      content: "info@techbrain.com",
+      content: "info@techbrain.co.ke",
+      link: "mailto:info@techbrain.co.ke",
     },
     {
       icon: <FaPhone className="text-primary" />,
       title: "Call Us",
-      content: "+1 (555) 123-4567",
+      content: "+254 (78) 0010010",
+      link: "tel:+254780010010",
     },
   ];
 
   const socialLinks = [
-    { icon: <FaLinkedinIn className="text-primary" />, href: "#" },
-    { icon: <FaTwitter className="text-primary" />, href: "#" },
-    { icon: <FaFacebookF className="text-primary" />, href: "#" },
-    { icon: <FaInstagram className="text-primary" />, href: "#" },
+    { icon: <FaLinkedinIn className="text-primary" />, href: "https://www.linkedin.com/company/techbrainco/?viewAsMember=true" },
+    { icon: <FaTwitter className="text-primary" />, href: "https://twitter.com" },
+    { icon: <FaFacebookF className="text-primary" />, href: "https://facebook.com" },
+    { icon: <FaInstagram className="text-primary" />, href: "https://instagram.com" },
   ];
 
   return (
@@ -113,7 +130,13 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-bold mb-1">{item.title}</h4>
-                    <p className="opacity-80">{item.content}</p>
+                    {item.link ? (
+                      <a href={item.link} className="opacity-80 hover:text-primary transition-colors">
+                        {item.content}
+                      </a>
+                    ) : (
+                      <p className="opacity-80">{item.content}</p>
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -129,6 +152,8 @@ export default function ContactSection() {
                   <a
                     key={index}
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-primary/10 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary/20 transition duration-300"
                   >
                     {link.icon}
