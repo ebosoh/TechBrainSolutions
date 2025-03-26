@@ -130,8 +130,7 @@ export default function ChatAgent() {
     <>
       {/* Chat Button with Playful Cartoon Image */}
       <motion.button
-        className="fixed bottom-6 right-6 bg-primary text-white rounded-full p-2 shadow-lg z-50 flex flex-col items-center justify-center overflow-visible"
-        whileHover={{ scale: 1.05 }}
+        className="fixed bottom-6 right-6 bg-primary text-white rounded-full p-2 shadow-lg z-50 flex flex-col items-center justify-center overflow-visible chat-launcher"
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
         aria-label="Open chat"
@@ -190,7 +189,7 @@ export default function ChatAgent() {
                   }`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-2 ${
+                    className={`max-w-[80%] rounded-2xl px-4 py-2 message-bubble ${
                       msg.role === "user"
                         ? "bg-primary text-white rounded-tr-none"
                         : "bg-gray-100 text-gray-800 rounded-tl-none"
@@ -202,7 +201,7 @@ export default function ChatAgent() {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-2 text-gray-800">
+                  <div className="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-2 text-gray-800 message-bubble">
                     <Loader2 className="h-4 w-4 animate-spin" />
                   </div>
                 </div>
@@ -211,7 +210,7 @@ export default function ChatAgent() {
             </div>
 
             {/* Input */}
-            <form onSubmit={handleSubmit} className="p-3 border-t">
+            <form onSubmit={handleSubmit} className="p-3 border-t chat-input-container">
               <div className="flex items-center bg-gray-100 rounded-full pr-2">
                 <input
                   type="text"
