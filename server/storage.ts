@@ -107,10 +107,14 @@ export class MemStorage implements IStorage {
     const id = this.chatMessageCurrentId++;
     const createdAt = new Date();
     
+    // Ensure history field is properly set
+    const history = chatData.history || [];
+    
     const chatMessage: ChatMessage = {
       ...chatData,
       id,
-      createdAt
+      createdAt,
+      history
     };
     
     this.chatMessages.set(id, chatMessage);
@@ -120,7 +124,12 @@ export class MemStorage implements IStorage {
   async getChatSessionHistory(sessionId: string): Promise<ChatMessage[]> {
     return Array.from(this.chatMessages.values())
       .filter(msg => msg.sessionId === sessionId)
-      .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+      .sort((a, b) => {
+        // Null check for createdAt
+        const timeA = a.createdAt ? a.createdAt.getTime() : 0;
+        const timeB = b.createdAt ? b.createdAt.getTime() : 0;
+        return timeA - timeB;
+      });
   }
 }
 

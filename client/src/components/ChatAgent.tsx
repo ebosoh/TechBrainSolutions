@@ -57,23 +57,23 @@ export default function ChatAgent() {
     setIsLoading(true);
 
     try {
-      const response = await apiRequest(
+      const response = await apiRequest<{success: boolean; response: string; sessionId: string}>(
         "/api/chat",
         {
           method: "POST",
           body: JSON.stringify({
             message: message.trim(),
             history: messages.map(m => ({ role: m.role, content: m.content })),
-          }),
+          })
         }
       );
 
-      if (response && typeof response === 'object' && 'response' in response) {
+      if (response && response.success) {
         setMessages((prev) => [
           ...prev,
           {
             id: Date.now().toString(),
-            content: response.response as string,
+            content: response.response,
             role: "assistant",
             timestamp: new Date(),
           },
