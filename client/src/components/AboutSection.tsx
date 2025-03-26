@@ -59,13 +59,17 @@ export default function AboutSection() {
         >
           <motion.div
             variants={slideIn("right", "tween", 0.2, 1)}
-            className="lg:w-1/2 mb-10 lg:mb-0 lg:pr-16"
+            className="lg:w-1/2 mb-10 lg:mb-0 lg:pr-16 h-full"
+            style={{ minHeight: "100%" }}
           >
-            <img
-              src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3400&q=80"
-              alt="TechBrain diverse team collaborating"
-              className="rounded-xl shadow-[0_10px_30px_-10px_rgba(52,183,104,0.2)] w-full h-auto"
-            />
+            <div className="w-full h-full" style={{ minHeight: "450px" }}>
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3400&q=80"
+                alt="TechBrain diverse team collaborating"
+                className="rounded-xl shadow-[0_10px_30px_-10px_rgba(52,183,104,0.2)] w-full h-full object-cover"
+                style={{ height: "100%", minHeight: "450px" }}
+              />
+            </div>
           </motion.div>
           <motion.div
             variants={fadeIn("left", "tween", 0.2, 1)}
