@@ -47,7 +47,14 @@ export default function HeroSection() {
                 href="#contact"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  const contactSection = document.querySelector('#contact');
+                  if (contactSection) {
+                    const topOffset = contactSection.getBoundingClientRect().top + window.scrollY - 80;
+                    window.scrollTo({
+                      top: topOffset,
+                      behavior: 'smooth'
+                    });
+                  }
                 }}
                 className="bg-white border-2 border-primary/20 hover:border-primary/40 text-primary font-semibold py-3 px-6 rounded-xl text-center transition duration-300 hover:shadow-lg"
               >

@@ -26,7 +26,14 @@ export default function CallToActionSection() {
                 href="#contact"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  const contactSection = document.querySelector('#contact');
+                  if (contactSection) {
+                    const topOffset = contactSection.getBoundingClientRect().top + window.scrollY - 80;
+                    window.scrollTo({
+                      top: topOffset,
+                      behavior: 'smooth'
+                    });
+                  }
                 }}
                 className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1"
               >
