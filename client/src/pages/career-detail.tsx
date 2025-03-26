@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRoute, Link } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
 import MainLayout from '@/layouts/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -24,7 +25,8 @@ const applicationSchema = z.object({
   email: z.string().email("Please enter a valid email"),
   phone: z.string().min(8, "Please enter a valid phone number"),
   coverLetter: z.string().min(50, "Please write a brief cover letter (min 50 characters)"),
-  resume: z.string().min(1, "Please provide a link to your resume"),
+  resumeLink: z.string().min(1, "Please provide a link to your resume").url("Please enter a valid URL"),
+  careerId: z.number(),
 });
 
 type ApplicationValues = z.infer<typeof applicationSchema>;
@@ -39,6 +41,9 @@ export default function CareerDetail() {
   const [match, params] = useRoute<{ id: string }>('/career/:id');
   const careerId = match ? parseInt(params.id) : null;
 
+  // Query client for cache invalidation
+  const queryClient = useQueryClient();
+
   // Setup form
   const form = useForm<ApplicationValues>({
     resolver: zodResolver(applicationSchema),
@@ -47,9 +52,17 @@ export default function CareerDetail() {
       email: "",
       phone: "",
       coverLetter: "",
-      resume: ""
+      resumeLink: "",
+      careerId: careerId || 0,
     }
   });
+  
+  // Update careerId when it changes
+  React.useEffect(() => {
+    if (careerId) {
+      form.setValue('careerId', careerId);
+    }
+  }, [careerId, form]);
   
   // Handle form submission
   const onSubmit = (values: ApplicationValues) => {
@@ -312,7 +325,7 @@ export default function CareerDetail() {
                       
                       <FormField
                         control={form.control}
-                        name="resume"
+                        name="resumeLink"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Resume/CV Link</FormLabel>
