@@ -13,7 +13,8 @@ import {
   Settings,
   LogOut,
   Menu,
-  ChevronLeft
+  ChevronLeft,
+  ClipboardList
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -61,6 +62,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       href: '/dashboard/careers',
       icon: <Briefcase className="w-4 h-4 mr-2" />,
       active: location === '/dashboard/careers',
+    },
+    {
+      label: 'Applications',
+      href: '/dashboard/applications',
+      icon: <ClipboardList className="w-4 h-4 mr-2" />,
+      active: location === '/dashboard/applications',
     },
     {
       label: 'Settings',

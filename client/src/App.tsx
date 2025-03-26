@@ -15,6 +15,7 @@ import CareerDetail from "@/pages/career-detail";
 import DashboardCareers from "@/pages/dashboard/careers";
 import DashboardContent from "@/pages/dashboard/content";
 import DashboardEnquiries from "@/pages/dashboard/enquiries";
+import DashboardApplications from "@/pages/dashboard/applications";
 
 // Lazy load components dynamically
 const LazyComponent = (importFunc: () => Promise<any>) => {
@@ -59,6 +60,7 @@ function Router() {
       <Route path="/dashboard/careers" component={DashboardCareers} />
       <Route path="/dashboard/content" component={DashboardContent} />
       <Route path="/dashboard/enquiries" component={DashboardEnquiries} />
+      <Route path="/dashboard/applications" component={DashboardApplications} />
       <Route path="/dashboard/users" component={Dashboard} />
       <Route path="/dashboard/settings" component={Dashboard} />
       

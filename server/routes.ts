@@ -3,8 +3,9 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { 
   contactFormSchema, chatRequestSchema, careerSchema, websiteContentSchema,
+  jobApplicationSchema, applicationStatusUpdateSchema,
   type ContactFormData, type ChatMessageData, type CareerData, type WebsiteContentData, 
-  insertUserSchema
+  type JobApplicationData, insertUserSchema
 } from "@shared/schema";
 import { generateChatResponse } from "./openai";
 import { v4 as uuidv4 } from "uuid";
@@ -411,6 +412,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching users:", error);
       res.status(500).json({ success: false, message: "Error fetching users" });
+    }
+  });
+
+  // Job Application routes
+  app.post("/api/applications", async (req, res) => {
+    try {
+      const validatedData = jobApplicationSchema.parse(req.body);
+      const application = await storage.saveJobApplication(validatedData);
+      res.status(201).json({ success: true, data: application });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({
+          success: false,
+          message: "Validation error",
+          errors: error.errors
+        });
+      } else {
+        console.error("Error submitting job application:", error);
+        res.status(500).json({ success: false, message: "Error submitting job application" });
+      }
+    }
+  });
+
+  app.get("/api/applications", async (req, res) => {
+    try {
+      const applications = await storage.getAllJobApplications();
+      res.status(200).json({ success: true, data: applications });
+    } catch (error) {
+      console.error("Error fetching job applications:", error);
+      res.status(500).json({ success: false, message: "Error fetching job applications" });
+    }
+  });
+  
+  app.get("/api/applications/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const application = await storage.getJobApplicationById(id);
+      
+      if (!application) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "Job application not found" 
+        });
+      }
+      
+      res.status(200).json({ success: true, data: application });
+    } catch (error) {
+      console.error("Error fetching job application:", error);
+      res.status(500).json({ success: false, message: "Error fetching job application" });
+    }
+  });
+  
+  app.get("/api/careers/:careerId/applications", async (req, res) => {
+    try {
+      const careerId = parseInt(req.params.careerId);
+      const applications = await storage.getJobApplicationsByCareerId(careerId);
+      res.status(200).json({ success: true, data: applications });
+    } catch (error) {
+      console.error("Error fetching job applications by career:", error);
+      res.status(500).json({ success: false, message: "Error fetching job applications" });
+    }
+  });
+  
+  app.patch("/api/applications/:id/status", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status, notes } = applicationStatusUpdateSchema.parse(req.body);
+      
+      const application = await storage.updateJobApplicationStatus(id, status, notes);
+      res.status(200).json({ success: true, data: application });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({
+          success: false,
+          message: "Validation error",
+          errors: error.errors
+        });
+      } else {
+        console.error("Error updating job application status:", error);
+        res.status(500).json({ success: false, message: "Error updating job application status" });
+      }
     }
   });
 
