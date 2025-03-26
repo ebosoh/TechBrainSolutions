@@ -6,7 +6,7 @@ import { GrassCard } from "@/components/ui/grass-card";
 
 export default function HeroSection() {
   const features = [
-    { icon: <FaBrain className="text-2xl text-primary" />, title: "AI Powered" },
+    { icon: <FaBrain className="text-2xl" style={{ color: '#f0644c' }} />, title: "AI Powered" },
     { icon: <FaDatabase className="text-2xl text-primary" />, title: "Big Data" },
     { icon: <FaCode className="text-2xl text-primary" />, title: "Web Design" },
     { icon: <FaBullhorn className="text-2xl text-primary" />, title: "Digital Marketing" },
