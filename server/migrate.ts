@@ -1,7 +1,7 @@
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { db } from './db';
 import { log } from './vite';
-import { users, contactForm } from '@shared/schema';
+import { users, contactForm, chatMessages } from '@shared/schema';
 
 // This function will create all necessary tables in the database
 export async function migrateDatabase() {
@@ -26,6 +26,15 @@ export async function migrateDatabase() {
           subject TEXT NOT NULL,
           message TEXT NOT NULL,
           submitted_at TIMESTAMP DEFAULT NOW()
+        );
+        
+        CREATE TABLE IF NOT EXISTS chat_messages (
+          id SERIAL PRIMARY KEY,
+          session_id TEXT NOT NULL,
+          role TEXT NOT NULL,
+          content TEXT NOT NULL,
+          history JSONB DEFAULT '[]',
+          created_at TIMESTAMP DEFAULT NOW()
         );
       `);
       
