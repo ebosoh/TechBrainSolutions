@@ -180,8 +180,14 @@ export default function ExpertiseSection() {
                 icon={item.icon}
                 detailedInfo={item.detailedInfo}
                 onLearnMoreClick={() => {
-                  console.log(`User clicked Learn more on ${item.title}`);
-                  alert(`Learn more clicked for ${item.title}`);
+                  const contactSection = document.querySelector('#contact');
+                  if (contactSection) {
+                    const topOffset = contactSection.getBoundingClientRect().top + window.scrollY - 80;
+                    window.scrollTo({
+                      top: topOffset,
+                      behavior: 'smooth'
+                    });
+                  }
                 }}
               />
             </motion.div>

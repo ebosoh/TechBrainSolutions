@@ -116,7 +116,14 @@ const DetailModal = ({
             className="bg-primary text-white px-6 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors"
             onClick={() => {
               onClose();
-              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const contactSection = document.querySelector('#contact');
+              if (contactSection) {
+                const topOffset = contactSection.getBoundingClientRect().top + window.scrollY - 80;
+                window.scrollTo({
+                  top: topOffset,
+                  behavior: 'smooth'
+                });
+              }
             }}
           >
             Contact Us

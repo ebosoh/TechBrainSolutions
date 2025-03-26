@@ -37,7 +37,14 @@ export default function HeroSection() {
                 href="#expertise"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.querySelector('#expertise')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  const expertiseSection = document.querySelector('#expertise');
+                  if (expertiseSection) {
+                    const topOffset = expertiseSection.getBoundingClientRect().top + window.scrollY - 80;
+                    window.scrollTo({
+                      top: topOffset,
+                      behavior: 'smooth'
+                    });
+                  }
                 }}
                 className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 text-center"
               >
