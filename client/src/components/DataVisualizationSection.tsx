@@ -59,6 +59,10 @@ export default function DataVisualizationSection() {
   const [animatedData, setAnimatedData] = useState(techSkillsData.map(item => ({ ...item, value: 0 })));
   const [activeIndex, setActiveIndex] = useState(0);
   const [showChart, setShowChart] = useState(0);
+  const [projectsCount, setProjectsCount] = useState(0);
+  const [retentionCount, setRetentionCount] = useState(0);
+  const [teamGrowthCount, setTeamGrowthCount] = useState(0);
+  const [techStackCount, setTechStackCount] = useState(0);
   
   // Animation for bar chart data
   useEffect(() => {
@@ -95,6 +99,72 @@ export default function DataVisualizationSection() {
     }, 8000);
     
     return () => clearInterval(interval);
+  }, []);
+  
+  // Counter animation for stats
+  useEffect(() => {
+    // Projects counter animation (0 to 200)
+    const projectsDuration = 2000; // ms
+    const projectsIncrement = 200 / (projectsDuration / 16);
+    let projectsCurrentCount = 0;
+    
+    const projectsTimer = setInterval(() => {
+      projectsCurrentCount += projectsIncrement;
+      if (projectsCurrentCount >= 200) {
+        projectsCurrentCount = 200;
+        clearInterval(projectsTimer);
+      }
+      setProjectsCount(Math.floor(projectsCurrentCount));
+    }, 16);
+    
+    // Retention counter animation (0 to 94)
+    const retentionDuration = 2000; // ms
+    const retentionIncrement = 94 / (retentionDuration / 16);
+    let retentionCurrentCount = 0;
+    
+    const retentionTimer = setInterval(() => {
+      retentionCurrentCount += retentionIncrement;
+      if (retentionCurrentCount >= 94) {
+        retentionCurrentCount = 94;
+        clearInterval(retentionTimer);
+      }
+      setRetentionCount(Math.floor(retentionCurrentCount));
+    }, 16);
+    
+    // Team Growth counter animation (0 to 45)
+    const teamGrowthDuration = 2000; // ms
+    const teamGrowthIncrement = 45 / (teamGrowthDuration / 16);
+    let teamGrowthCurrentCount = 0;
+    
+    const teamGrowthTimer = setInterval(() => {
+      teamGrowthCurrentCount += teamGrowthIncrement;
+      if (teamGrowthCurrentCount >= 45) {
+        teamGrowthCurrentCount = 45;
+        clearInterval(teamGrowthTimer);
+      }
+      setTeamGrowthCount(Math.floor(teamGrowthCurrentCount));
+    }, 16);
+    
+    // Tech Stack counter animation (0 to 12)
+    const techStackDuration = 2000; // ms
+    const techStackIncrement = 12 / (techStackDuration / 16);
+    let techStackCurrentCount = 0;
+    
+    const techStackTimer = setInterval(() => {
+      techStackCurrentCount += techStackIncrement;
+      if (techStackCurrentCount >= 12) {
+        techStackCurrentCount = 12;
+        clearInterval(techStackTimer);
+      }
+      setTechStackCount(Math.floor(techStackCurrentCount));
+    }, 16);
+    
+    return () => {
+      clearInterval(projectsTimer);
+      clearInterval(retentionTimer);
+      clearInterval(teamGrowthTimer);
+      clearInterval(techStackTimer);
+    };
   }, []);
   
   const chartAnimationVariants = {
@@ -363,7 +433,7 @@ export default function DataVisualizationSection() {
                         delay: 0.2
                       }}
                     >
-                      200+
+                      {projectsCount}+
                     </motion.span>
                   </div>
                   <p className="text-muted-foreground text-sm mt-2">
@@ -405,7 +475,7 @@ export default function DataVisualizationSection() {
                         delay: 0.3
                       }}
                     >
-                      94%
+                      {retentionCount}%
                     </motion.span>
                   </div>
                   <p className="text-muted-foreground text-sm mt-2">
@@ -445,7 +515,7 @@ export default function DataVisualizationSection() {
                         delay: 0.4
                       }}
                     >
-                      +45%
+                      +{teamGrowthCount}%
                     </motion.span>
                   </div>
                   <p className="text-muted-foreground text-sm mt-2">
@@ -488,7 +558,7 @@ export default function DataVisualizationSection() {
                         delay: 0.5
                       }}
                     >
-                      15+
+                      {techStackCount}+
                     </motion.span>
                   </div>
                   <p className="text-muted-foreground text-sm mt-2">
