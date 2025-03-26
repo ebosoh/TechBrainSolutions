@@ -63,7 +63,7 @@ export default function AboutSection() {
           >
             <div className="w-full h-auto" style={{ maxHeight: "360px", overflow: "hidden" }}>
               <img
-                src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3400&q=80"
+                src="https://images.unsplash.com/photo-1542744094-24638eff58bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3400&q=80"
                 alt="TechBrain African team collaborating around a table in high-end urban office"
                 className="rounded-xl shadow-[0_10px_30px_-10px_rgba(52,183,104,0.2)] w-full h-auto"
               />
