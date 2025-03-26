@@ -55,7 +55,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           <div>
             <h3 className="text-2xl font-heading font-bold mb-6">
-              Tech<span className="text-primary">Brain</span>
+              <span className="text-primary">Tech</span><span style={{ color: '#f0644c' }}>Brain</span>
             </h3>
             <p className="text-gray-300 mb-6">
               Intelligent, data-driven solutions that fuel growth, innovation, and
