@@ -57,8 +57,8 @@ export default function Navbar() {
         });
       }
     } else {
-      // For regular links like "/careers", navigate directly
-      window.location.href = href;
+      // For regular links like "/careers", use wouter navigation
+      navigate(href);
     }
   };
 
