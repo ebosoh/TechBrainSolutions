@@ -12,84 +12,84 @@ interface Customer {
   description: string;
 }
 
-// Create a list of customers with placeholder images for testing
+// Create a list of customers with their logos
 const customers: Customer[] = [
   {
-    name: "FIAN International",
-    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=FIAN+International",
-    industry: "Human Rights & Food Security",
-    website: "https://www.fian.org/en/",
-    description: "Global organization fighting for the right to adequate food and nutrition."
+    name: "Microsoft",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
+    industry: "Technology & Software",
+    website: "https://www.microsoft.com/",
+    description: "Leading global technology company developing innovative solutions."
   },
   {
-    name: "Resilient Colorado",
-    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Resilient+Colorado",
-    industry: "Community Development",
-    website: "https://coloradoresilience.org/",
-    description: "Alliance working to strengthen communities across Colorado."
+    name: "Google",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+    industry: "Technology & Internet Services",
+    website: "https://www.google.com/",
+    description: "World-renowned search engine and technology innovator."
   },
   {
-    name: "Rainbow's United",
-    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=Rainbow's+United",
-    industry: "Child Development & Support",
-    website: "https://rainbowsunited.org/",
-    description: "Specialized care for children with developmental disabilities."
+    name: "Amazon",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+    industry: "E-Commerce & Cloud Computing",
+    website: "https://www.amazon.com/",
+    description: "Global leader in e-commerce and cloud infrastructure services."
   },
   {
-    name: "Catchafire",
-    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Catchafire",
-    industry: "Nonprofit & Volunteering",
-    website: "https://www.catchafire.org/",
-    description: "Platform connecting professionals with nonprofit organizations."
+    name: "IBM",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
+    industry: "Technology & Consulting",
+    website: "https://www.ibm.com/",
+    description: "Pioneer in computing technology and business solutions."
   },
   {
-    name: "TechBrain Africa",
-    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=TechBrain",
-    industry: "Technology & Innovation",
-    website: "https://www.techbrain.africa",
-    description: "Empowering businesses through cutting-edge technology solutions."
+    name: "Samsung",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg",
+    industry: "Electronics & Technology",
+    website: "https://www.samsung.com/",
+    description: "Leading manufacturer of electronics and digital solutions."
   },
   {
-    name: "Moore Parts",
-    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Moore+Parts",
-    industry: "Automotive Parts",
-    website: "https://mooreparts.com/",
-    description: "Comprehensive parts solution for the automotive industry."
+    name: "Oracle",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",
+    industry: "Cloud & Database Services",
+    website: "https://www.oracle.com/",
+    description: "Provider of enterprise cloud computing and database solutions."
   },
   {
-    name: "Tell Your Trail",
-    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=Tell+Your+Trail",
-    industry: "Outdoor & Recreation",
-    website: "https://tellyourtrail.com/",
-    description: "Connecting outdoor enthusiasts with trail stories and experiences."
+    name: "Apple",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
+    industry: "Consumer Electronics",
+    website: "https://www.apple.com/",
+    description: "Designer and developer of premium consumer technology products."
   },
   {
-    name: "Eighty Four",
-    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Eighty+Four",
-    industry: "Design & Marketing",
-    website: "https://eightyfour.com/",
-    description: "Creative agency delivering innovative branding solutions."
+    name: "Intel",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Intel_logo_%282006-2020%29.svg",
+    industry: "Semiconductor Manufacturing",
+    website: "https://www.intel.com/",
+    description: "Leading producer of microprocessors and technology solutions."
   },
   {
-    name: "Sahara Biz",
-    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=Sahara+Biz",
-    industry: "Business Solutions",
-    website: "https://saharabiz.com/",
-    description: "Comprehensive business services for growth and development."
+    name: "Cisco",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg",
+    industry: "Networking & Security",
+    website: "https://www.cisco.com/",
+    description: "Worldwide leader in networking and cybersecurity solutions."
   },
   {
-    name: "Dream Wrap Sleep",
-    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Dream+Wrap",
-    industry: "Health & Wellness",
-    website: "https://dreamwrapsleep.com/",
-    description: "Innovative sleep solutions for improved health and wellness."
+    name: "Salesforce",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg",
+    industry: "Cloud Software & CRM",
+    website: "https://www.salesforce.com/",
+    description: "Provider of customer relationship management and cloud solutions."
   },
   {
-    name: "Ring Masters",
-    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=Ring+Masters",
-    industry: "Jewelry & Retail",
-    website: "https://shopringmasters.com/",
-    description: "Premium jewelry retail with custom design offerings."
+    name: "Adobe",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Adobe_Corporate_logo.svg",
+    industry: "Software & Digital Media",
+    website: "https://www.adobe.com/",
+    description: "Creator of industry-standard creative and document management software."
   }
 ];
 
@@ -162,9 +162,9 @@ export default function SimpleCustomersCarousel() {
     <section className="w-full py-16 bg-gradient-to-b from-primary/5 to-primary/10">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Happy Customers</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Trusted Partners</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            We're proud to have helped these amazing organizations achieve their digital goals. Here's a showcase of some of our successful collaborations.
+            We collaborate with industry leaders to deliver cutting-edge technology solutions. These partnerships enable us to provide world-class services to our clients.
           </p>
         </div>
         
