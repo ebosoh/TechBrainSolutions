@@ -3,7 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import ExpertiseSection from "@/components/ExpertiseSection";
 import AboutSection from "@/components/AboutSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import CustomersCarousel from "@/components/CustomersCarousel";
+import SimpleCustomersCarousel from "@/components/SimpleCustomersCarousel";
 import CallToActionSection from "@/components/CallToActionSection";
 import DataVisualizationSection from "@/components/DataVisualizationSection";
 import ContactSection from "@/components/ContactSection";
@@ -23,7 +23,7 @@ export default function Home() {
       <WavySeparator />
       <TestimonialsSection />
       <WavySeparator />
-      <CustomersCarousel />
+      <SimpleCustomersCarousel />
       <WavySeparator />
       <CallToActionSection />
       <WavySeparator />
