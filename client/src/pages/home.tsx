@@ -2,7 +2,6 @@ import MainLayout from "@/layouts/MainLayout";
 import HeroSection from "@/components/HeroSection";
 import ExpertiseSection from "@/components/ExpertiseSection";
 import AboutSection from "@/components/AboutSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
 import SimpleCustomersCarousel from "@/components/SimpleCustomersCarousel";
 import CallToActionSection from "@/components/CallToActionSection";
 import DataVisualizationSection from "@/components/DataVisualizationSection";
@@ -20,8 +19,6 @@ export default function Home() {
       <AboutSection />
       <WavySeparator />
       <DataVisualizationSection />
-      <WavySeparator />
-      <TestimonialsSection />
       <WavySeparator />
       <SimpleCustomersCarousel />
       <WavySeparator />
