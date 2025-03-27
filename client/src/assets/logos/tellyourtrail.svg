@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
+  <g>
+    <path fill="#4c9f70" d="M40,20 h60 v15 h-22 v45 h-15 v-45 h-23 z"/>
+    <path fill="#4c9f70" d="M108,20 h15 v60 h-15 z"/>
+    <path fill="#4c9f70" d="M133,20 h15 v60 h-15 z"/>
+    <path fill="#4c9f70" d="M155,20 h15 v60 h-15 z"/>
+    <path fill="#4c9f70" d="M185,30 h-10 v-10 h35 v10 h-10 v50 h-15 z"/>
+    <path fill="#825d3f" d="M215,20 h15 v35 l15,-35 h15 l-20,40 l25,20 h-18 l-17,-15 v15 h-15 z"/>
+  </g>
+</svg>

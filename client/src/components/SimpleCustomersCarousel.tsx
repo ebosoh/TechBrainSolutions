@@ -3,6 +3,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+// Import logo assets
+import fianLogo from "../assets/logos/fian.svg";
+import coloradoLogo from "../assets/logos/coloradoresilience.svg";
+import rainbowsLogo from "../assets/logos/rainbows.svg";
+import catchafireLogo from "../assets/logos/catchafire.svg";
+import techbrainLogo from "../assets/logos/techbrain.svg";
+import moorePartsLogo from "../assets/logos/mooreparts.svg";
+import trailLogo from "../assets/logos/tellyourtrail.svg";
+import eightyFourLogo from "../assets/logos/eightyfour.svg";
+import saharaLogo from "../assets/logos/saharabiz.svg";
+import dreamWrapLogo from "../assets/logos/dreamwrap.svg";
+import ringMastersLogo from "../assets/logos/ringmasters.svg";
+
 // Define the customer data interface
 interface Customer {
   name: string;
@@ -12,81 +25,81 @@ interface Customer {
   description: string;
 }
 
-// Create a list of customers with direct logo URLs from their websites
+// Create a list of customers with local SVG logos
 const customers: Customer[] = [
   {
     name: "FIAN International",
-    logo: "https://www.fian.org/fileadmin/user_upload/FIAN_international_logo.png",
+    logo: fianLogo,
     industry: "Human Rights & Food Security",
     website: "https://www.fian.org/en/",
     description: "Global organization fighting for the right to adequate food and nutrition."
   },
   {
     name: "Resilient Colorado",
-    logo: "https://coloradoresilience.org/wp-content/uploads/2021/10/CRA-logo-color-1.png",
+    logo: coloradoLogo,
     industry: "Community Development",
     website: "https://coloradoresilience.org/",
     description: "Alliance working to strengthen communities across Colorado."
   },
   {
     name: "Rainbow's United",
-    logo: "https://rainbowsunited.org/wp-content/uploads/2021/04/logo.png",
+    logo: rainbowsLogo,
     industry: "Child Development & Support",
     website: "https://rainbowsunited.org/",
     description: "Specialized care for children with developmental disabilities."
   },
   {
     name: "Catchafire",
-    logo: "https://www.catchafire.org/static/images/site/logos/catchafire-logo.svg",
+    logo: catchafireLogo,
     industry: "Nonprofit & Volunteering",
     website: "https://www.catchafire.org/",
     description: "Platform connecting professionals with nonprofit organizations."
   },
   {
     name: "TechBrain Africa",
-    logo: "https://www.techbrain.africa/wp-content/uploads/2022/03/TechBrain-Logo-1.png",
+    logo: techbrainLogo,
     industry: "Technology & Innovation",
     website: "https://www.techbrain.africa",
     description: "Empowering businesses through cutting-edge technology solutions."
   },
   {
     name: "Moore Parts",
-    logo: "https://mooreparts.com/wp-content/uploads/2023/08/MP_Logo.png",
+    logo: moorePartsLogo,
     industry: "Automotive Parts",
     website: "https://mooreparts.com/",
     description: "Comprehensive parts solution for the automotive industry."
   },
   {
     name: "Tell Your Trail",
-    logo: "https://tellyourtrail.com/wp-content/uploads/2023/06/Tell-Your-Trail-Logo.png",
+    logo: trailLogo,
     industry: "Outdoor & Recreation",
     website: "https://tellyourtrail.com/",
     description: "Connecting outdoor enthusiasts with trail stories and experiences."
   },
   {
     name: "Eighty Four",
-    logo: "https://eightyfour.com/wp-content/uploads/2023/10/84-Logo-Navbar-2.png",
+    logo: eightyFourLogo,
     industry: "Design & Marketing",
     website: "https://eightyfour.com/",
     description: "Creative agency delivering innovative branding solutions."
   },
   {
     name: "Sahara Biz",
-    logo: "https://saharabiz.com/wp-content/uploads/2024/03/Sahara-Biz.png",
+    logo: saharaLogo,
     industry: "Business Solutions",
     website: "https://saharabiz.com/",
     description: "Comprehensive business services for growth and development."
   },
   {
     name: "Dream Wrap Sleep",
-    logo: "https://dreamwrapsleep.com/wp-content/uploads/2022/04/Dream-Wrap-Sleep-Logo.png",
+    logo: dreamWrapLogo,
     industry: "Health & Wellness",
     website: "https://dreamwrapsleep.com/",
     description: "Innovative sleep solutions for improved health and wellness."
   },
   {
     name: "Ring Masters",
-    logo: "https://shopringmasters.com/cdn/shop/files/ringmasters-logo-new.png",
+    logo: ringMastersLogo,
     industry: "Jewelry & Retail",
     website: "https://shopringmasters.com/",
     description: "Premium jewelry retail with custom design offerings."

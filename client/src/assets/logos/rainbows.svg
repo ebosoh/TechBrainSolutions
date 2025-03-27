@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
+  <defs>
+    <linearGradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF5B99"/>
+      <stop offset="20%" stop-color="#FF5447"/>
+      <stop offset="40%" stop-color="#FF7B21"/>
+      <stop offset="60%" stop-color="#EAFC37"/>
+      <stop offset="80%" stop-color="#4FCB6B"/>
+      <stop offset="100%" stop-color="#51A8DD"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#rainbow)" d="M50,30 c0,-5 4,-10 10,-10 h180 c5,0 10,4 10,10 v40 c0,5 -4,10 -10,10 h-180 c-5,0 -10,-4 -10,-10 z"/>
+  <text x="150" y="55" font-family="Arial" font-size="24" text-anchor="middle" fill="#FFFFFF" font-weight="bold">Rainbow's United</text>
+</svg>
