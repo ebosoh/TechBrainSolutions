@@ -26,8 +26,8 @@ export default function HeroSection() {
             className="md:w-1/2 mb-10 md:mb-0 md:pr-10"
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight mb-6">
-              Intelligent Solutions for{" "}
-              <span className="text-primary">Business Transformation</span>
+              Intelligent Solutions that{" "}
+              <span className="text-primary">Transform your Business</span>
             </h1>
             <p className="text-lg md:text-xl opacity-80 mb-8 leading-relaxed">
               We leverage cutting-edge AI, Big Data, and Machine Learning to drive innovation and give your business a competitive edge in today's fast-evolving digital landscape.
