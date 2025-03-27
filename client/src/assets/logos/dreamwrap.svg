@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
-  <g fill="#6c4675">
-    <path d="M20,30 c0,-6 5,-11 11,-11 h20 c6,0 11,5 11,11 v40 c0,6 -5,11 -11,11 h-20 c-6,0 -11,-5 -11,-11 z M35,35 v30 h15 v-30 z"/>
-    <path d="M70,20 h15 v9 h1 c3,-7 10,-11 18,-11 14,0 22,10 22,24 v38 h-15 v-34 c0,-9 -4,-14 -12,-14 -8,0 -14,6 -14,16 v32 h-15 z"/>
-    <path d="M135,20 h15 v25 h25 v-25 h15 v60 h-15 v-20 h-25 v20 h-15 z"/>
-    <path d="M200,20 h15 v9 h1 c3,-7 10,-11 18,-11 14,0 22,10 22,24 v38 h-15 v-34 c0,-9 -4,-14 -12,-14 -8,0 -14,6 -14,16 v32 h-15 z"/>
-  </g>
+  <defs>
+    <linearGradient id="dreamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6c4675;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8e44ad;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background with curved shape -->
+  <path d="M30,30 C60,20 120,20 150,20 C180,20 240,20 270,30 C280,35 280,65 270,70 C240,80 180,80 150,80 C120,80 60,80 30,70 C20,65 20,35 30,30 Z" 
+        fill="url(#dreamGrad)" />
+  
+  <!-- Moon icon -->
+  <path d="M60,50 C60,41 67,35 75,35 C70,40 70,50 75,55 C67,55 60,59 60,50 Z" 
+        fill="white" opacity="0.9" />
+  
+  <!-- Stars -->
+  <circle cx="85" cy="42" r="2" fill="white" />
+  <circle cx="90" cy="60" r="1.5" fill="white" />
+  <circle cx="100" cy="50" r="1" fill="white" />
+  
+  <!-- Text -->
+  <text x="170" y="50" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">DREAM WRAP</text>
+  <text x="170" y="65" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">SLEEP</text>
+  
+  <!-- ZZZ -->
+  <text x="235" y="45" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">Z</text>
+  <text x="245" y="53" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Z</text>
+  <text x="253" y="60" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">Z</text>
 </svg>

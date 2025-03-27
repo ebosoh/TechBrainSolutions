@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
-  <g fill="#d4aa37">
-    <path d="M40,35 c0,-8 7,-15 15,-15 h10 c8,0 15,7 15,15 v5 c0,8 -7,15 -15,15 h-10 c-8,0 -15,7 -15,15 v5 c0,8 7,15 15,15 h10 c8,0 15,-7 15,-15 h-15 c0,0 0,5 -5,5 s-5,-5 -5,-5 v-5 c0,0 0,-5 5,-5 h10 c8,0 15,-7 15,-15 v-5 c0,-8 -7,-15 -15,-15 h-10 c-8,0 -15,7 -15,15 h15 c0,0 0,-5 5,-5 s5,5 5,5 v5 c0,0 0,5 -5,5 h-10 c-8,0 -15,7 -15,15 v5 c0,8 7,15 15,15 h10 c8,0 15,-7 15,-15 v-5 c0,-8 -7,-15 -15,-15 h-10 c-8,0 -15,7 -15,15 v-25 z"/>
-    <path d="M100,20 h15 v60 h-15 z"/>
-    <path d="M125,20 h15 v45 h25 v15 h-40 z"/>
-    <path d="M175,20 h15 v60 h-15 z"/>
-    <path d="M200,35 c0,-8 7,-15 15,-15 h10 c8,0 15,7 15,15 v5 c0,8 -7,15 -15,15 h-10 c-8,0 -15,7 -15,15 v5 c0,8 7,15 15,15 h10 c8,0 15,-7 15,-15 h-15 c0,0 0,5 -5,5 s-5,-5 -5,-5 v-5 c0,0 0,-5 5,-5 h10 c8,0 15,-7 15,-15 v-5 c0,-8 -7,-15 -15,-15 h-10 c-8,0 -15,7 -15,15 h15 c0,0 0,-5 5,-5 s5,5 5,5 v5 c0,0 0,5 -5,5 h-10 c-8,0 -15,7 -15,15 v5 c0,8 7,15 15,15 h10 c8,0 15,-7 15,-15 v-5 c0,-8 -7,-15 -15,-15 h-10 c-8,0 -15,7 -15,15 v-25 z"/>
-  </g>
+  <defs>
+    <linearGradient id="saharaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f39c12;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d35400;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Desert background -->
+  <rect x="30" y="30" width="240" height="40" fill="url(#saharaGrad)" />
+  
+  <!-- Sand dunes -->
+  <path d="M30,70 C60,40 90,60 120,45 C150,30 180,55 210,40 C240,25 270,50 270,70 L30,70" 
+        fill="#e67e22" opacity="0.5" />
+  
+  <!-- Sun -->
+  <circle cx="60" cy="45" r="12" fill="white" opacity="0.8" />
+  
+  <!-- Text -->
+  <text x="150" y="53" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="white">SAHARA</text>
+  <text x="150" y="68" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">BIZ</text>
+  
+  <!-- Business graph -->
+  <polyline points="210,60 220,50 230,55 240,45 250,40" 
+            fill="none" stroke="white" stroke-width="2" />
+  <circle cx="210" cy="60" r="2" fill="white" />
+  <circle cx="220" cy="50" r="2" fill="white" />
+  <circle cx="230" cy="55" r="2" fill="white" />
+  <circle cx="240" cy="45" r="2" fill="white" />
+  <circle cx="250" cy="40" r="2" fill="white" />
 </svg>

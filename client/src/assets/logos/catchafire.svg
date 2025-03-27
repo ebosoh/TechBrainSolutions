@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
-  <g fill="#FF5C35">
-    <path d="M30,30 c0,-5 4,-10 10,-10 h20 c5,0 10,4 10,10 v40 c0,5 -4,10 -10,10 h-20 c-5,0 -10,-4 -10,-10 z M45,35 v30 h10 v-30 z"/>
-    <path d="M80,20 h15 v60 h-15 z"/>
-    <path d="M105,35 h15 v45 h-15 z M105,20 h15 v10 h-15 z"/>
-    <path d="M130,20 h15 c5,0 10,4 10,10 v40 c0,5 -4,10 -10,10 h-15 z M145,35 v30 h-5 v-30 z"/>
-    <path d="M165,20 h15 v60 h-15 z"/>
-    <path d="M190,20 h15 v9 h1 c3,-7 10,-11 18,-11 14,0 22,10 22,24 v38 h-15 v-34 c0,-9 -4,-14 -12,-14 -8,0 -14,6 -14,16 v32 h-15 z"/>
-    <path d="M255,20 h15 v60 h-15 z"/>
-  </g>
+  <defs>
+    <linearGradient id="fireGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e74c3c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f39c12;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect x="30" y="30" width="240" height="40" rx="20" fill="url(#fireGrad)" />
+  
+  <!-- Flame icon -->
+  <path d="M70,50 C70,60 80,55 80,65 C80,70 65,75 65,60 C65,55 60,55 60,45 C60,35 70,30 70,40 C70,45 75,45 75,50 C75,55 70,55 70,50 Z" fill="white" />
+  
+  <!-- Text -->
+  <text x="165" y="55" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="white">CATCHAFIRE</text>
 </svg>

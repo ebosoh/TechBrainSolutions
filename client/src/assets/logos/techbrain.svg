@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
-  <g>
-    <path fill="#2f72df" d="M30,20 h60 v15 h-22 v45 h-15 v-45 h-23 z"/>
-    <path fill="#2f72df" d="M100,20 h15 v25 h25 v-25 h15 v60 h-15 v-20 h-25 v20 h-15 z"/>
-    <path fill="#f0644c" d="M165,50 a1,1 0 0,0 50,0 a1,1 0 0,0 -50,0 z M179,50 a1,1 0 0,0 21,0 a1,1 0 0,0 -21,0 z"/>
-    <path fill="#f0644c" d="M226,20 h15 v9 h1 c3,-7 10,-11 18,-11 14,0 22,10 22,24 v38 h-15 v-34 c0,-9 -4,-14 -12,-14 -8,0 -14,6 -14,16 v32 h-15 z"/>
-  </g>
+  <defs>
+    <linearGradient id="techGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2f72df;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a4fb9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Brain Shape -->
+  <path d="M120,30 C135,25 165,25 180,30 C190,33 195,40 195,50 C195,60 190,67 180,70
+           C195,75 195,90 180,95 C165,100 135,100 120,95 C105,90 105,75 120,70
+           C110,67 105,60 105,50 C105,40 110,33 120,30 Z" 
+        fill="url(#techGrad)" />
+  
+  <!-- Circuit paths -->
+  <path d="M120,40 L140,40 L140,60 L160,60 L160,80" fill="none" stroke="white" stroke-width="2" />
+  <path d="M180,40 L160,40 L160,50 L130,50 L130,70 L150,70" fill="none" stroke="white" stroke-width="2" />
+  
+  <!-- Connection points -->
+  <circle cx="120" cy="40" r="3" fill="white" />
+  <circle cx="140" cy="40" r="3" fill="white" />
+  <circle cx="140" cy="60" r="3" fill="white" />
+  <circle cx="160" cy="60" r="3" fill="white" />
+  <circle cx="160" cy="80" r="3" fill="white" />
+  <circle cx="180" cy="40" r="3" fill="white" />
+  <circle cx="160" cy="40" r="3" fill="white" />
+  <circle cx="160" cy="50" r="3" fill="white" />
+  <circle cx="130" cy="50" r="3" fill="white" />
+  <circle cx="130" cy="70" r="3" fill="white" />
+  <circle cx="150" cy="70" r="3" fill="white" />
+  
+  <!-- Text -->
+  <text x="150" y="55" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" fill="white">TECH</text>
+  <text x="150" y="75" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" fill="#f0644c">BRAIN</text>
 </svg>

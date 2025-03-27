@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
-  <g>
-    <path fill="#4c9f70" d="M40,20 h60 v15 h-22 v45 h-15 v-45 h-23 z"/>
-    <path fill="#4c9f70" d="M108,20 h15 v60 h-15 z"/>
-    <path fill="#4c9f70" d="M133,20 h15 v60 h-15 z"/>
-    <path fill="#4c9f70" d="M155,20 h15 v60 h-15 z"/>
-    <path fill="#4c9f70" d="M185,30 h-10 v-10 h35 v10 h-10 v50 h-15 z"/>
-    <path fill="#825d3f" d="M215,20 h15 v35 l15,-35 h15 l-20,40 l25,20 h-18 l-17,-15 v15 h-15 z"/>
-  </g>
+  <defs>
+    <linearGradient id="trailGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#27ae60;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background with mountains -->
+  <rect x="30" y="25" width="240" height="50" rx="5" fill="url(#trailGrad)" />
+  <path d="M30,70 L70,35 L90,50 L120,30 L150,45 L180,25 L210,45 L250,25 L270,70 L30,70" 
+        fill="#1e8449" opacity="0.5" />
+  
+  <!-- Hiking trail -->
+  <path d="M60,60 C80,50 100,65 120,50 C140,35 160,60 180,45 C200,30 220,55 240,50" 
+        fill="none" stroke="white" stroke-width="3" stroke-dasharray="5,5" />
+  
+  <!-- Text -->
+  <text x="150" y="48" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">TELL YOUR TRAIL</text>
+  
+  <!-- Hiker icon -->
+  <circle cx="60" cy="50" r="4" fill="white" />
+  <path d="M60,54 L60,60 L58,65 M60,60 L62,65 M60,56 L65,58 M60,56 L55,58" stroke="white" stroke-width="2" />
 </svg>
