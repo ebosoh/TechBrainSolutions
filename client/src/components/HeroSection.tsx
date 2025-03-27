@@ -1,17 +1,9 @@
 import { motion } from "framer-motion";
 import { fadeIn, slideIn, staggerContainer } from "@/lib/animations";
-import { FaBrain, FaDatabase, FaCode, FaBullhorn } from "react-icons/fa";
+import { FaBrain } from "react-icons/fa";
 import { GrassTexture } from "@/components/ui/grass-texture";
-import { GrassCard } from "@/components/ui/grass-card";
 
 export default function HeroSection() {
-  const features = [
-    { icon: <FaBrain className="text-2xl" style={{ color: '#f0644c' }} />, title: "AI Powered" },
-    { icon: <FaDatabase className="text-2xl text-primary" />, title: "Big Data" },
-    { icon: <FaCode className="text-2xl text-primary" />, title: "Web Design" },
-    { icon: <FaBullhorn className="text-2xl text-primary" />, title: "Digital Marketing" },
-  ];
-
   return (
     <section id="home" className="pt-32 pb-20 relative overflow-hidden bg-[radial-gradient(rgba(52,183,104,0.1)_2px,transparent_2px),radial-gradient(rgba(52,183,104,0.05)_2px,transparent_2px)] bg-[length:40px_40px] bg-[0_0,20px_20px]">
       <div className="container mx-auto px-6">
@@ -93,23 +85,6 @@ export default function HeroSection() {
               </div>
             </GrassTexture>
           </motion.div>
-        </motion.div>
-
-        <motion.div 
-          variants={fadeIn("up", "tween", 0.4, 1)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 text-center"
-        >
-          {features.map((feature, index) => (
-            <GrassCard key={index} className="p-6">
-              <div className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
-                {feature.icon}
-              </div>
-              <h3 className="font-heading font-bold">{feature.title}</h3>
-            </GrassCard>
-          ))}
         </motion.div>
       </div>
     </section>
