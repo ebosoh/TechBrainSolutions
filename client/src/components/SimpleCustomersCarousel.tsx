@@ -12,84 +12,84 @@ interface Customer {
   description: string;
 }
 
-// Create a list of customers with their logos
+// Create a list of customers with direct logo URLs from their websites
 const customers: Customer[] = [
   {
-    name: "Microsoft",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
-    industry: "Technology & Software",
-    website: "https://www.microsoft.com/",
-    description: "Leading global technology company developing innovative solutions."
+    name: "FIAN International",
+    logo: "https://www.fian.org/fileadmin/user_upload/FIAN_international_logo.png",
+    industry: "Human Rights & Food Security",
+    website: "https://www.fian.org/en/",
+    description: "Global organization fighting for the right to adequate food and nutrition."
   },
   {
-    name: "Google",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-    industry: "Technology & Internet Services",
-    website: "https://www.google.com/",
-    description: "World-renowned search engine and technology innovator."
+    name: "Resilient Colorado",
+    logo: "https://coloradoresilience.org/wp-content/uploads/2021/10/CRA-logo-color-1.png",
+    industry: "Community Development",
+    website: "https://coloradoresilience.org/",
+    description: "Alliance working to strengthen communities across Colorado."
   },
   {
-    name: "Amazon",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-    industry: "E-Commerce & Cloud Computing",
-    website: "https://www.amazon.com/",
-    description: "Global leader in e-commerce and cloud infrastructure services."
+    name: "Rainbow's United",
+    logo: "https://rainbowsunited.org/wp-content/uploads/2021/04/logo.png",
+    industry: "Child Development & Support",
+    website: "https://rainbowsunited.org/",
+    description: "Specialized care for children with developmental disabilities."
   },
   {
-    name: "IBM",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
-    industry: "Technology & Consulting",
-    website: "https://www.ibm.com/",
-    description: "Pioneer in computing technology and business solutions."
+    name: "Catchafire",
+    logo: "https://www.catchafire.org/static/images/site/logos/catchafire-logo.svg",
+    industry: "Nonprofit & Volunteering",
+    website: "https://www.catchafire.org/",
+    description: "Platform connecting professionals with nonprofit organizations."
   },
   {
-    name: "Samsung",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg",
-    industry: "Electronics & Technology",
-    website: "https://www.samsung.com/",
-    description: "Leading manufacturer of electronics and digital solutions."
+    name: "TechBrain Africa",
+    logo: "https://www.techbrain.africa/wp-content/uploads/2022/03/TechBrain-Logo-1.png",
+    industry: "Technology & Innovation",
+    website: "https://www.techbrain.africa",
+    description: "Empowering businesses through cutting-edge technology solutions."
   },
   {
-    name: "Oracle",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",
-    industry: "Cloud & Database Services",
-    website: "https://www.oracle.com/",
-    description: "Provider of enterprise cloud computing and database solutions."
+    name: "Moore Parts",
+    logo: "https://mooreparts.com/wp-content/uploads/2023/08/MP_Logo.png",
+    industry: "Automotive Parts",
+    website: "https://mooreparts.com/",
+    description: "Comprehensive parts solution for the automotive industry."
   },
   {
-    name: "Apple",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
-    industry: "Consumer Electronics",
-    website: "https://www.apple.com/",
-    description: "Designer and developer of premium consumer technology products."
+    name: "Tell Your Trail",
+    logo: "https://tellyourtrail.com/wp-content/uploads/2023/06/Tell-Your-Trail-Logo.png",
+    industry: "Outdoor & Recreation",
+    website: "https://tellyourtrail.com/",
+    description: "Connecting outdoor enthusiasts with trail stories and experiences."
   },
   {
-    name: "Intel",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Intel_logo_%282006-2020%29.svg",
-    industry: "Semiconductor Manufacturing",
-    website: "https://www.intel.com/",
-    description: "Leading producer of microprocessors and technology solutions."
+    name: "Eighty Four",
+    logo: "https://eightyfour.com/wp-content/uploads/2023/10/84-Logo-Navbar-2.png",
+    industry: "Design & Marketing",
+    website: "https://eightyfour.com/",
+    description: "Creative agency delivering innovative branding solutions."
   },
   {
-    name: "Cisco",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg",
-    industry: "Networking & Security",
-    website: "https://www.cisco.com/",
-    description: "Worldwide leader in networking and cybersecurity solutions."
+    name: "Sahara Biz",
+    logo: "https://saharabiz.com/wp-content/uploads/2024/03/Sahara-Biz.png",
+    industry: "Business Solutions",
+    website: "https://saharabiz.com/",
+    description: "Comprehensive business services for growth and development."
   },
   {
-    name: "Salesforce",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg",
-    industry: "Cloud Software & CRM",
-    website: "https://www.salesforce.com/",
-    description: "Provider of customer relationship management and cloud solutions."
+    name: "Dream Wrap Sleep",
+    logo: "https://dreamwrapsleep.com/wp-content/uploads/2022/04/Dream-Wrap-Sleep-Logo.png",
+    industry: "Health & Wellness",
+    website: "https://dreamwrapsleep.com/",
+    description: "Innovative sleep solutions for improved health and wellness."
   },
   {
-    name: "Adobe",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Adobe_Corporate_logo.svg",
-    industry: "Software & Digital Media",
-    website: "https://www.adobe.com/",
-    description: "Creator of industry-standard creative and document management software."
+    name: "Ring Masters",
+    logo: "https://shopringmasters.com/cdn/shop/files/ringmasters-logo-new.png",
+    industry: "Jewelry & Retail",
+    website: "https://shopringmasters.com/",
+    description: "Premium jewelry retail with custom design offerings."
   }
 ];
 
@@ -162,9 +162,9 @@ export default function SimpleCustomersCarousel() {
     <section className="w-full py-16 bg-gradient-to-b from-primary/5 to-primary/10">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Trusted Partners</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Happy Customers</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            We collaborate with industry leaders to deliver cutting-edge technology solutions. These partnerships enable us to provide world-class services to our clients.
+            We're proud to have helped these amazing organizations achieve their digital goals. Here's a showcase of some of our successful collaborations.
           </p>
         </div>
         
