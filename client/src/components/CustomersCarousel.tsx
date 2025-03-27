@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
+import React, { useEffect, useRef } from "react";
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious
+} from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 // Define the customer data interface
 interface Customer {
@@ -95,119 +99,85 @@ const customers: Customer[] = [
 ];
 
 export default function CustomersCarousel() {
-  const [api, setApi] = useState<CarouselApi>();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const intervalRef = useRef<number | null>(null);
+  // Set up autoplay with useRef and useEffect
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const autoplayTimerRef = useRef<number | null>(null);
 
-  // Setup autoplay and slide index tracking
   useEffect(() => {
-    if (api) {
-      // Set up the event listeners for slide change
-      api.on("select", () => {
-        setActiveIndex(api.selectedScrollSnap());
-      });
+    const autoplay = () => {
+      const nextButton = carouselRef.current?.querySelector('[aria-label="Next slide"]') as HTMLButtonElement | null;
+      if (nextButton) {
+        nextButton.click();
+      }
+    };
 
-      // Set up autoplay
-      const startAutoplay = () => {
-        intervalRef.current = window.setInterval(() => {
-          api.scrollNext();
-        }, 4000);
-      };
+    // Start autoplay
+    autoplayTimerRef.current = window.setInterval(autoplay, 4000);
 
-      const stopAutoplay = () => {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-          intervalRef.current = null;
-        }
-      };
-
-      // Start autoplay
-      startAutoplay();
-
-      // Add event listeners to pause autoplay when interacting
-      api.on("pointerDown", stopAutoplay);
-      api.on("pointerUp", startAutoplay);
-
-      // Clean up function
-      return () => {
-        stopAutoplay();
-        api.off("select");
-        api.off("pointerDown");
-        api.off("pointerUp");
-      };
-    }
-  }, [api]);
-
-  // Animation variants for the cards
-  const cardVariants = {
-    inactive: { scale: 0.95, opacity: 0.7 },
-    active: { scale: 1, opacity: 1 }
-  };
+    // Clean up on unmount
+    return () => {
+      if (autoplayTimerRef.current) {
+        clearInterval(autoplayTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section className="w-full py-16 bg-gradient-to-b from-primary/5 to-primary/10">
       <div className="container mx-auto px-4">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-10"
-        >
+        <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Happy Customers</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             We're proud to have helped these amazing organizations achieve their digital goals. Here's a showcase of some of our successful collaborations.
           </p>
-        </motion.div>
+        </div>
 
-        <Carousel 
-          className="w-full max-w-5xl mx-auto"
-          setApi={setApi}
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-        >
-          <CarouselContent>
-            {customers.map((customer, index) => (
-              <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 h-full">
-                <motion.div
-                  variants={cardVariants}
-                  animate={activeIndex === index % customers.length ? "active" : "inactive"}
-                  transition={{ duration: 0.3 }}
-                  className="h-full"
-                >
-                  <Card className={cn(
-                    "h-full border-2 hover:border-primary/70 transition-all duration-300 backdrop-blur-sm",
-                    activeIndex === index % customers.length ? "border-primary shadow-lg" : "border-transparent"
-                  )}>
-                    <CardContent className="flex flex-col items-center justify-between p-6 h-full">
-                      <div className="w-full h-16 mb-4 flex items-center justify-center">
-                        <img 
-                          src={customer.logo} 
-                          alt={`${customer.name} logo`} 
-                          className="max-h-full max-w-full object-contain" 
-                        />
-                      </div>
-                      <div className="text-center">
-                        <h3 className="font-semibold text-lg mb-1">{customer.name}</h3>
-                        <p className="text-xs text-primary/80 font-medium mb-2">{customer.industry}</p>
-                        <p className="text-sm text-muted-foreground mb-3">{customer.description}</p>
-                        <a 
-                          href={customer.website} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-xs text-primary hover:underline"
-                        >
-                          Visit website
-                        </a>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+        <div ref={carouselRef}>
+          <Carousel
+            className="w-full max-w-5xl mx-auto relative"
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+          >
+            <CarouselContent>
+              {customers.map((customer, index) => (
+                <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 h-full">
+                  <div className="h-full transition-all duration-300 hover:scale-[1.02]">
+                    <Card className="h-full border-2 border-transparent hover:border-primary/70 transition-all duration-300 backdrop-blur-sm">
+                      <CardContent className="flex flex-col items-center justify-between p-6 h-full">
+                        <div className="w-full h-16 mb-4 flex items-center justify-center">
+                          <img
+                            src={customer.logo}
+                            alt={`${customer.name} logo`}
+                            className="max-h-full max-w-full object-contain"
+                          />
+                        </div>
+                        <div className="text-center">
+                          <h3 className="font-semibold text-lg mb-1">{customer.name}</h3>
+                          <p className="text-xs text-primary/80 font-medium mb-2">{customer.industry}</p>
+                          <p className="text-sm text-muted-foreground mb-3">{customer.description}</p>
+                          <a
+                            href={customer.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-primary hover:underline"
+                          >
+                            Visit website
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="hidden md:block">
+              <CarouselPrevious className="absolute -left-2 top-1/2 transform -translate-y-1/2 bg-background/80 backdrop-blur-sm" />
+              <CarouselNext className="absolute -right-2 top-1/2 transform -translate-y-1/2 bg-background/80 backdrop-blur-sm" />
+            </div>
+          </Carousel>
+        </div>
       </div>
     </section>
   );
