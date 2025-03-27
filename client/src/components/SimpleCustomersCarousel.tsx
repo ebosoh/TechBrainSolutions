@@ -12,81 +12,81 @@ interface Customer {
   description: string;
 }
 
-// Create a list of customers
+// Create a list of customers with placeholder images for testing
 const customers: Customer[] = [
   {
     name: "FIAN International",
-    logo: "https://www.fian.org/fileadmin/templates/fian/img/logo.svg",
+    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=FIAN+International",
     industry: "Human Rights & Food Security",
     website: "https://www.fian.org/en/",
     description: "Global organization fighting for the right to adequate food and nutrition."
   },
   {
     name: "Resilient Colorado",
-    logo: "https://coloradoresilience.org/wp-content/uploads/2023/02/cra-logo-color.svg",
+    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Resilient+Colorado",
     industry: "Community Development",
     website: "https://coloradoresilience.org/",
     description: "Alliance working to strengthen communities across Colorado."
   },
   {
     name: "Rainbow's United",
-    logo: "https://rainbowsunited.org/wp-content/uploads/2021/04/Rainbow.svg",
+    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=Rainbow's+United",
     industry: "Child Development & Support",
     website: "https://rainbowsunited.org/",
     description: "Specialized care for children with developmental disabilities."
   },
   {
     name: "Catchafire",
-    logo: "https://images.catchafire.org/frontend-production/assets/resources/catchafire-text-logo-7e59c94fd5.svg",
+    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Catchafire",
     industry: "Nonprofit & Volunteering",
     website: "https://www.catchafire.org/",
     description: "Platform connecting professionals with nonprofit organizations."
   },
   {
     name: "TechBrain Africa",
-    logo: "https://www.techbrain.africa/wp-content/uploads/2022/03/TechBrain-Logo-1.png",
+    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=TechBrain",
     industry: "Technology & Innovation",
     website: "https://www.techbrain.africa",
     description: "Empowering businesses through cutting-edge technology solutions."
   },
   {
     name: "Moore Parts",
-    logo: "https://mooreparts.com/wp-content/uploads/elementor/thumbs/MP_Logo-qhbv6ov6idcmttfcjg7w4sjqj3k01b6bch6fjm0j1c.webp",
+    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Moore+Parts",
     industry: "Automotive Parts",
     website: "https://mooreparts.com/",
     description: "Comprehensive parts solution for the automotive industry."
   },
   {
     name: "Tell Your Trail",
-    logo: "https://tellyourtrail.com/wp-content/uploads/2023/06/cropped-New-Logo-1-1.webp",
+    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=Tell+Your+Trail",
     industry: "Outdoor & Recreation",
     website: "https://tellyourtrail.com/",
     description: "Connecting outdoor enthusiasts with trail stories and experiences."
   },
   {
     name: "Eighty Four",
-    logo: "https://eightyfour.com/wp-content/uploads/2023/10/84-Logo-Navbar-2.svg",
+    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Eighty+Four",
     industry: "Design & Marketing",
     website: "https://eightyfour.com/",
     description: "Creative agency delivering innovative branding solutions."
   },
   {
     name: "Sahara Biz",
-    logo: "https://saharabiz.com/wp-content/uploads/2024/03/Sahara-Biz.png",
+    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=Sahara+Biz",
     industry: "Business Solutions",
     website: "https://saharabiz.com/",
     description: "Comprehensive business services for growth and development."
   },
   {
     name: "Dream Wrap Sleep",
-    logo: "https://dreamwrapsleep.com/wp-content/uploads/2022/04/Dream-Wrap-Sleep-Logo.png",
+    logo: "https://placehold.co/300x150/2f72df/FFFFFF?text=Dream+Wrap",
     industry: "Health & Wellness",
     website: "https://dreamwrapsleep.com/",
     description: "Innovative sleep solutions for improved health and wellness."
   },
   {
     name: "Ring Masters",
-    logo: "https://shopringmasters.com/cdn/shop/files/RM-Logo_120x.png",
+    logo: "https://placehold.co/300x150/f0644c/FFFFFF?text=Ring+Masters",
     industry: "Jewelry & Retail",
     website: "https://shopringmasters.com/",
     description: "Premium jewelry retail with custom design offerings."
