@@ -49,10 +49,10 @@ export default function AnnouncementCard({
 
   // Red line animation
   const redLineAnimation = {
-    x: ["-100%", "0%", "100%", "0%", "-100%"],
+    x: ["-100%", "0%", "100%", "200%", "100%", "0%", "-100%"],
     transition: {
       repeat: Infinity,
-      duration: 4,
+      duration: 6,
       ease: "easeInOut"
     }
   };
@@ -109,7 +109,7 @@ export default function AnnouncementCard({
             <div className="relative h-1 mb-3 overflow-hidden">
               <div className="absolute inset-0 bg-gray-200/20 rounded-full"></div>
               <motion.div 
-                className="absolute h-full w-1/3 bg-red-500 rounded-full"
+                className="absolute h-full w-1/4 bg-red-500 rounded-full shadow-sm"
                 animate={redLineAnimation}
               ></motion.div>
             </div>
