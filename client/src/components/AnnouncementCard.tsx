@@ -35,6 +35,28 @@ export default function AnnouncementCard({
     setTimeout(onClose, 500);
   };
 
+  // Star animation
+  const starAnimation = {
+    rotate: [0, 15, -15, 10, -10, 5, -5, 0],
+    scale: [1, 1.1, 1.2, 1.1, 1],
+    transition: {
+      repeat: Infinity,
+      repeatType: "loop" as const,
+      duration: 3,
+      ease: "easeInOut"
+    }
+  };
+
+  // Red line animation
+  const redLineAnimation = {
+    x: ["-100%", "0%", "100%", "0%", "-100%"],
+    transition: {
+      repeat: Infinity,
+      duration: 4,
+      ease: "easeInOut"
+    }
+  };
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -70,14 +92,26 @@ export default function AnnouncementCard({
               <X size={16} />
             </button>
             
-            <div className="flex items-center mb-3">
-              {/* Financial icon/badge */}
-              <div className="bg-white/20 rounded-full p-1.5 mr-3">
+            <div className="flex items-center mb-1">
+              {/* Animated Financial icon/badge */}
+              <motion.div 
+                animate={starAnimation}
+                className="bg-white/20 rounded-full p-1.5 mr-3"
+              >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 2L14.5 9H21L16 13.5L18 21L12 17L6 21L8 13.5L3 9H9.5L12 2Z" fill="white"/>
                 </svg>
-              </div>
+              </motion.div>
               <h3 className="text-lg font-semibold">New Launch Announcement!</h3>
+            </div>
+            
+            {/* Animated red line */}
+            <div className="relative h-1 mb-3 overflow-hidden">
+              <div className="absolute inset-0 bg-gray-200/20 rounded-full"></div>
+              <motion.div 
+                className="absolute h-full w-1/3 bg-red-500 rounded-full"
+                animate={redLineAnimation}
+              ></motion.div>
             </div>
             
             <p className="mb-4 leading-relaxed">{message}</p>
@@ -91,9 +125,13 @@ export default function AnnouncementCard({
               <ChevronRight size={16} />
             </Button>
             
-            {/* Powered by TechBrain badge */}
-            <div className="mt-3 text-xs opacity-80 flex items-center justify-end">
-              <span>Powered by TechBrain</span>
+            {/* Powered by TechBrain badge with brand colors */}
+            <div className="mt-3 text-xs flex items-center justify-end">
+              <span>Powered by </span>
+              <span className="font-medium">
+                <span className="text-[#2f72df]">Tech</span>
+                <span className="text-[#f0644c]">Brain</span>
+              </span>
             </div>
           </div>
         </motion.div>
