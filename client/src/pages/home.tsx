@@ -35,7 +35,7 @@ export default function Home() {
         <AnnouncementCard 
           message="We are happy to launch Tajiri AI, Your Data-driven MMF Investment Advisor."
           ctaText="Learn More"
-          ctaLink="https://www.tajiri.live"
+          ctaLink="https://tajiri.live/"
           onClose={() => setShowAnnouncement(false)}
           showDelay={2000}
         />

@@ -111,7 +111,7 @@ const customers: Customer[] = [
     name: "Tajiri AI",
     logo: tajiriAILogo,
     industry: "Artificial Intelligence & Fintech",
-    website: "https://www.tajiri.live",
+    website: "https://tajiri.live/",
     description: "Advanced AI solutions for financial technology and wealth management."
   }
 ];
