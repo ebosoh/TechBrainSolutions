@@ -1,3 +1,4 @@
+import { useState } from "react";
 import MainLayout from "@/layouts/MainLayout";
 import HeroSection from "@/components/HeroSection";
 import ExpertiseSection from "@/components/ExpertiseSection";
@@ -8,8 +9,11 @@ import DataVisualizationSection from "@/components/DataVisualizationSection";
 import ContactSection from "@/components/ContactSection";
 import ChatAgent from "@/components/ChatAgent";
 import WavySeparator from "@/components/ui/wavy-separator";
+import AnnouncementCard from "@/components/AnnouncementCard";
 
 export default function Home() {
+  const [showAnnouncement, setShowAnnouncement] = useState(true);
+
   return (
     <MainLayout>
       <HeroSection />
@@ -26,6 +30,16 @@ export default function Home() {
       <WavySeparator />
       <ContactSection />
       <ChatAgent />
+      
+      {showAnnouncement && (
+        <AnnouncementCard 
+          message="We are happy to launch Tajiri AI, Your Data-driven MMF Investment Advisor."
+          ctaText="Learn More"
+          ctaLink="https://www.tajiri.live"
+          onClose={() => setShowAnnouncement(false)}
+          showDelay={2000}
+        />
+      )}
     </MainLayout>
   );
 }

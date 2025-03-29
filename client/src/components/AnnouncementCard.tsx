@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { X, ArrowUpRight, ChevronRight } from "lucide-react";
 
 interface AnnouncementCardProps {
   message: string;
@@ -44,29 +44,57 @@ export default function AnnouncementCard({
           exit={{ x: "-100%", opacity: 0 }}
           transition={{ 
             type: "spring", 
-            stiffness: 100, 
-            damping: 20 
+            stiffness: 80, 
+            damping: 15 
           }}
           className="fixed bottom-8 left-8 z-50 max-w-md"
         >
-          <div className="bg-gradient-to-r from-green-600 to-cyan-600 rounded-lg shadow-lg p-6 text-white relative">
+          <div className="bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-lg shadow-xl p-6 text-white relative border border-white/10">
+            {/* Decorative circuit patterns in the background */}
+            <div className="absolute inset-0 opacity-10 overflow-hidden pointer-events-none">
+              <svg width="100%" height="100%" viewBox="0 0 200 200">
+                <path d="M20,50 L60,50 M70,50 L110,50 M110,50 L110,30 M110,50 L110,70 M120,50 L160,50" 
+                      stroke="white" strokeWidth="1" fill="none" />
+                <circle cx="65" cy="50" r="3" fill="white" />
+                <circle cx="115" cy="30" r="2" fill="white" />
+                <circle cx="115" cy="70" r="2" fill="white" />
+                <circle cx="165" cy="50" r="3" fill="white" />
+              </svg>
+            </div>
+            
             <button 
               onClick={handleClose}
-              className="absolute right-2 top-2 p-1 rounded-full hover:bg-white/20 transition-colors"
+              className="absolute right-2 top-2 p-1.5 rounded-full hover:bg-white/20 transition-colors"
               aria-label="Close announcement"
             >
-              <X size={18} />
+              <X size={16} />
             </button>
             
-            <h3 className="text-lg font-semibold mb-3">New Launch Announcement!</h3>
-            <p className="mb-4">{message}</p>
+            <div className="flex items-center mb-3">
+              {/* Financial icon/badge */}
+              <div className="bg-white/20 rounded-full p-1.5 mr-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L14.5 9H21L16 13.5L18 21L12 17L6 21L8 13.5L3 9H9.5L12 2Z" fill="white"/>
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold">New Launch Announcement!</h3>
+            </div>
+            
+            <p className="mb-4 leading-relaxed">{message}</p>
             
             <Button
-              className="bg-white text-green-600 hover:bg-white/90 hover:text-green-700 transition-colors"
+              variant="secondary"
+              className="bg-white text-emerald-600 hover:bg-white/90 hover:scale-105 transition-all gap-1 font-medium"
               onClick={() => window.open(ctaLink, "_blank")}
             >
               {ctaText}
+              <ChevronRight size={16} />
             </Button>
+            
+            {/* Powered by TechBrain badge */}
+            <div className="mt-3 text-xs opacity-80 flex items-center justify-end">
+              <span>Powered by TechBrain</span>
+            </div>
           </div>
         </motion.div>
       )}
