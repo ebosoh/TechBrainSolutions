@@ -17,6 +17,7 @@ import eightyFourLogo from "../assets/logos/eightyfour.svg";
 import saharaLogo from "../assets/logos/saharabiz.svg";
 import dreamWrapLogo from "../assets/logos/dreamwrap.svg";
 import ringMastersLogo from "../assets/logos/ringmasters.svg";
+import tajiriAILogo from "../assets/logos/tajiriai.svg";
 
 // Define the customer data interface
 interface Customer {
@@ -105,6 +106,13 @@ const customers: Customer[] = [
     industry: "Jewelry & Retail",
     website: "https://shopringmasters.com/",
     description: "Premium jewelry retail with custom design offerings."
+  },
+  {
+    name: "Tajiri AI",
+    logo: tajiriAILogo,
+    industry: "Artificial Intelligence & Fintech",
+    website: "https://tajiriai.com/",
+    description: "Advanced AI solutions for financial technology and wealth management."
   }
 ];
 
