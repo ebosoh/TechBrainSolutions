@@ -133,7 +133,7 @@ function generateFallbackResponse(message: string, userName?: string, websiteCon
     "web design": "TechBrain creates beautiful, responsive websites optimized for performance and user experience. We combine cutting-edge design principles with solid technical implementation to ensure your web presence stands out.",
     "e-commerce": "Our e-commerce platforms are built to drive sales, streamline operations, and provide exceptional shopping experiences. From product catalog management to secure payment processing, we handle all aspects of online retail.",
     "marketing": "TechBrain's digital marketing strategies encompass SEO, content marketing, social media campaigns, and performance analytics to increase your brand visibility and drive meaningful customer engagement.",
-    "contact us": "You can reach the TechBrain team through our contact form. A representative will respond to your inquiry within 24 hours.",
+    "contact us": "You can reach the TechBrain team through our contact form. A representative will respond to your inquiry within 24 hours. You can also call us at +254 (78) 0010010 or email us at hudson.eboso@techbrain.africa.",
     "service": "TechBrain offers various technology services including AI & Machine Learning, Big Data Analytics, Web Development, E-commerce Solutions, and Digital Marketing. Which specific service would you like to know more about?",
     "hello": "Hello! I'm TechBrain's AI assistant. How can I help you with our technology services today?",
     "hi": "Hi there! I'm here to help with information about TechBrain's services. What would you like to know about our technology solutions?",
@@ -141,11 +141,13 @@ function generateFallbackResponse(message: string, userName?: string, websiteCon
     "careers": "TechBrain has several career opportunities. You can find all our current job openings on our Careers page. We're always looking for talented individuals passionate about technology.",
     "location": "TechBrain is located at University Way, Nairobi, Kenya.",
     "reach us": "You can reach TechBrain at +254 (78) 0010010 or via email at hudson.eboso@techbrain.africa. Alternatively, you can use our contact form on the website.",
-    "tajiri": "Tajiri AI is one of our successful projects - it's a data-driven MMF Investment Advisor. You can learn more about it at https://tajiri.live/"
+    "tajiri": "Tajiri AI is one of our successful projects - it's a data-driven MMF Investment Advisor. You can learn more about it at https://tajiri.live/",
+    "contact information": "For inquiries, you can reach TechBrain at +254 (78) 0010010 or via email at hudson.eboso@techbrain.africa. Our office is located at University Way, Nairobi, Kenya.",
+    "phone number": "TechBrain's phone number is +254 (78) 0010010. Feel free to call us with any questions about our services."
   };
 
   // Simple response generation logic
-  let aiResponse = "I'm sorry, I don't have specific information about that topic. 🤔 Would you like me to connect you with a human representative who can better address your questions?";
+  let aiResponse = "I'm sorry, I don't have specific information about that topic. 🤔 You can contact TechBrain directly at +254 (78) 0010010 or via email at hudson.eboso@techbrain.africa, or use the contact form on our website.";
   
   // Check for keywords in the message (case insensitive)
   const lowerMessage = message.toLowerCase();
@@ -161,6 +163,8 @@ function generateFallbackResponse(message: string, userName?: string, websiteCon
       else if (keyword === "marketing") emoji = "📈 ";
       else if (keyword === "contact us") emoji = "📞 ";
       else if (keyword === "reach us") emoji = "📞 ";
+      else if (keyword === "contact information") emoji = "📞 ";
+      else if (keyword === "phone number") emoji = "📞 ";
       else if (keyword === "service") emoji = "🛠️ ";
       else if (keyword === "careers") emoji = "💼 ";
       else if (keyword === "location") emoji = "📍 ";
@@ -175,7 +179,7 @@ function generateFallbackResponse(message: string, userName?: string, websiteCon
   
   // If no keyword match, provide a general response for questions
   if (aiResponse.includes("I'm sorry") && lowerMessage.includes("?")) {
-    aiResponse = "That's a great question! 💡 TechBrain offers comprehensive technology solutions across AI, Big Data, Web Design, E-commerce, and Digital Marketing. For more specific details on this inquiry, I'd recommend filling out our contact form so our specialists can provide you with detailed information tailored to your needs. ✨";
+    aiResponse = "That's a great question! 💡 TechBrain offers comprehensive technology solutions across AI, Big Data, Web Design, E-commerce, and Digital Marketing. For more specific details on this inquiry, you can contact us at +254 (78) 0010010 or via email at hudson.eboso@techbrain.africa, or use our contact form to get a tailored response from our specialists. ✨";
   }
   
   // Personalize the response with userName if available
