@@ -1,5 +1,6 @@
 import { log } from "./vite";
 import axios from "axios";
+import { collectWebsiteContent, formatContentForAI } from "./websiteContent";
 
 // Deepseek chat implementation
 const DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions";
@@ -9,20 +10,54 @@ interface ChatMessage {
   content: string;
 }
 
+// Cache website content to avoid repeated database calls
+let cachedWebsiteContent: string | null = null;
+let cacheTimestamp: number = 0;
+const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
+
+/**
+ * Gets website content for AI context, with caching
+ */
+async function getWebsiteContent(): Promise<string> {
+  const now = Date.now();
+  
+  // Use cached content if available and not expired
+  if (cachedWebsiteContent && now - cacheTimestamp < CACHE_DURATION) {
+    log("Using cached website content for AI", "chat-api");
+    return cachedWebsiteContent;
+  }
+  
+  // Collect and format fresh content
+  log("Collecting fresh website content for AI", "chat-api");
+  const contentData = await collectWebsiteContent();
+  const formattedContent = formatContentForAI(contentData);
+  
+  // Update cache
+  cachedWebsiteContent = formattedContent;
+  cacheTimestamp = now;
+  
+  return formattedContent;
+}
+
 export async function generateChatResponse(
   message: string,
   history: ChatMessage[] = [],
   userName?: string
 ): Promise<string> {
   try {
-    // Define system message for the assistant, including userName if available
+    // Get website content for context
+    const websiteContent = await getWebsiteContent();
+    
+    // Define system message for the assistant, including website content and userName if available
     const userNameInstruction = userName ? `You are speaking with ${userName}. Address them by name occasionally to personalize the conversation.` : '';
     
     const systemMessage: ChatMessage = {
       role: "system",
-      content: `You are TechBrain's AI assistant. TechBrain is a technology company that specializes in AI, Big Data, Machine Learning, Web Design, E-commerce Platforms, and Digital Marketing. 
-      
-Your responses should be helpful, concise, and professional. If asked about services, provide specific information about TechBrain's offerings. If you don't know something specific about TechBrain beyond what's mentioned here, acknowledge that and offer to connect the user with a human representative for more details.
+      content: `You are TechBrain's AI assistant. Use the following website content to provide accurate and specific answers about TechBrain:
+
+${websiteContent}
+
+Your responses should be helpful, concise, and professional. When answering questions about TechBrain, rely on the above content to provide accurate information. If asked about something not covered in the website content, acknowledge that and offer to connect the user with a human representative for more details.
 
 ${userNameInstruction}
 
@@ -46,7 +81,7 @@ Add appropriate emojis to your responses to make them more engaging. For instanc
       { role: "user", content: message }
     ];
 
-    log(`Sending request to Deepseek API: ${message}`, "chat-api");
+    log(`Sending request to Deepseek API with website context: ${message}`, "chat-api");
     
     // Check if we have an API key
     if (!process.env.DEEPSEEK_API_KEY) {
@@ -87,8 +122,8 @@ Add appropriate emojis to your responses to make them more engaging. For instanc
   }
 }
 
-// Fallback function using rule-based responses
-function generateFallbackResponse(message: string, userName?: string): string {
+// Fallback function using rule-based responses with optional website content
+function generateFallbackResponse(message: string, userName?: string, websiteContent?: string): string {
   // Create a simple rule-based response generator
   // This is used as a fallback when the API key is missing or API call fails
   const keywords = {
@@ -98,11 +133,15 @@ function generateFallbackResponse(message: string, userName?: string): string {
     "web design": "TechBrain creates beautiful, responsive websites optimized for performance and user experience. We combine cutting-edge design principles with solid technical implementation to ensure your web presence stands out.",
     "e-commerce": "Our e-commerce platforms are built to drive sales, streamline operations, and provide exceptional shopping experiences. From product catalog management to secure payment processing, we handle all aspects of online retail.",
     "marketing": "TechBrain's digital marketing strategies encompass SEO, content marketing, social media campaigns, and performance analytics to increase your brand visibility and drive meaningful customer engagement.",
-    "contact": "You can reach the TechBrain team through our contact form. A representative will respond to your inquiry within 24 hours.",
+    "contact us": "You can reach the TechBrain team through our contact form. A representative will respond to your inquiry within 24 hours.",
     "service": "TechBrain offers various technology services including AI & Machine Learning, Big Data Analytics, Web Development, E-commerce Solutions, and Digital Marketing. Which specific service would you like to know more about?",
     "hello": "Hello! I'm TechBrain's AI assistant. How can I help you with our technology services today?",
     "hi": "Hi there! I'm here to help with information about TechBrain's services. What would you like to know about our technology solutions?",
-    "help": "I'd be happy to help! I can provide information about TechBrain's services, expertise, and how we can assist with your technology needs. What specific area are you interested in?"
+    "help": "I'd be happy to help! I can provide information about TechBrain's services, expertise, and how we can assist with your technology needs. What specific area are you interested in?",
+    "careers": "TechBrain has several career opportunities. You can find all our current job openings on our Careers page. We're always looking for talented individuals passionate about technology.",
+    "location": "TechBrain is located at University Way, Nairobi, Kenya.",
+    "reach us": "You can reach TechBrain at +254 (78) 0010010 or via email at hudson.eboso@techbrain.africa. Alternatively, you can use our contact form on the website.",
+    "tajiri": "Tajiri AI is one of our successful projects - it's a data-driven MMF Investment Advisor. You can learn more about it at https://tajiri.live/"
   };
 
   // Simple response generation logic
@@ -120,8 +159,12 @@ function generateFallbackResponse(message: string, userName?: string): string {
       else if (keyword === "web design") emoji = "🎨 ";
       else if (keyword === "e-commerce") emoji = "🛒 ";
       else if (keyword === "marketing") emoji = "📈 ";
-      else if (keyword === "contact") emoji = "📞 ";
+      else if (keyword === "contact us") emoji = "📞 ";
+      else if (keyword === "reach us") emoji = "📞 ";
       else if (keyword === "service") emoji = "🛠️ ";
+      else if (keyword === "careers") emoji = "💼 ";
+      else if (keyword === "location") emoji = "📍 ";
+      else if (keyword === "tajiri") emoji = "💰 ";
       else if (keyword === "hello" || keyword === "hi") emoji = "👋 ";
       else if (keyword === "help") emoji = "🆘 ";
       
